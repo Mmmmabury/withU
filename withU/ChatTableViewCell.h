@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface chatTableViewCell : UITableViewCell
+@interface ChatTableViewCell : UITableViewCell
 
 @property (copy, nonatomic) NSString* name;
 @property (copy, nonatomic) NSString* msg;

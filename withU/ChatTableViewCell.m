@@ -6,9 +6,9 @@
 //  Copyright © 2016年 cby. All rights reserved.
 //
 
-#import "chatTableViewCell.h"
+#import "ChatTableViewCell.h"
 
-@interface chatTableViewCell ()
+@interface ChatTableViewCell ()
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *msgLabel;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation chatTableViewCell
+@implementation ChatTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

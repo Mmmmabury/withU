@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchResultsController : UITableViewController
+@interface ContactsSearchResultsController : UITableViewController  <UISearchBarDelegate, UISearchResultsUpdating>
 
 - (instancetype) initWithNames:(NSDictionary *) names keys:(NSArray *) keys;
 @end

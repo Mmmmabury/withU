@@ -8,7 +8,7 @@
 
 
 #import "contactsViewController.h"
-#import "SearchResultsController.h"
+#import "ContactsSearchResultsController.h"
 
 static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 
@@ -26,23 +26,25 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:contactsTableViewIdentifier];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:contactsTableViewIdentifier];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"plist"];
     self.names = [NSDictionary dictionaryWithContentsOfFile:path];
     self.keys = [[self.names allKeys] sortedArrayUsingSelector:@selector(compare:)];
-
     
 //    搜索栏
     
-    SearchResultsController *resultsController = [[SearchResultsController alloc] initWithNames:self.names keys:self.keys];
+    ContactsSearchResultsController *resultsController = [[ContactsSearchResultsController alloc] initWithNames:self.names keys:self.keys];
     self.searchController = [[UISearchController alloc]initWithSearchResultsController:resultsController];
     
     UISearchBar *searchBar = self.searchController.searchBar;
     searchBar.scopeButtonTitles = @[@"All", @"Short", @"Long"];
-    searchBar.placeholder = @"输入查询";
+    searchBar.placeholder = @"搜索";
     [searchBar sizeToFit];
     self.tableView.tableHeaderView = searchBar;
     self.searchController.searchResultsUpdater = resultsController;
+    searchBar.delegate = resultsController;
+    
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];//改变 Navigation 颜色
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,20 +62,21 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     NSString *key = self.keys[section];
-    
     return [self.names[key] count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:contactsTableViewIdentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:contactsTableViewIdentifier];
-    }
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:contactsTableViewIdentifier];
+//    }
     // Configure the cell...
     NSString *key = self.keys[indexPath.section];
     NSArray *nameSection = self.names[key];
     cell.textLabel.text = nameSection[indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@"1234"];
+    cell.detailTextLabel.text = @"123";
     return cell;
 }
 
@@ -86,10 +89,13 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
     return self.keys;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 17.0;
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    return 19.0;
+//}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    UIViewController *view = segue.destinationViewController;
+//    view.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
-
-
 
 @end

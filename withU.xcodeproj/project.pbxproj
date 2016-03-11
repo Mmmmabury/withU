@@ -7,12 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22B8D4691C8D58FB004A7267 /* chatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4681C8D58FB004A7267 /* chatViewController.m */; };
-		22B8D46E1C8D599B004A7267 /* chatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D46D1C8D599B004A7267 /* chatTableViewCell.m */; };
+		222490601C91500700D08491 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2224905F1C91500700D08491 /* LoginViewController.m */; };
+		222A87291C902868003677BD /* ChatSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87281C902868003677BD /* ChatSearchResultController.m */; };
+		222A872C1C90502F003677BD /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A872B1C90502F003677BD /* ProfileTableViewController.m */; };
+		222A87321C905418003677BD /* ProfileAvatarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87311C905418003677BD /* ProfileAvatarCell.m */; };
+		222A87351C905581003677BD /* ProfileInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87341C905581003677BD /* ProfileInfoCell.m */; };
+		222A873E1C9069B6003677BD /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A873D1C9069B6003677BD /* EditProfileViewController.m */; };
+		222A87401C9128E8003677BD /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222A873F1C9128E8003677BD /* Login.storyboard */; };
+		222A87471C9129CE003677BD /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87461C9129CE003677BD /* RegisterViewController.m */; };
+		222A874A1C91396E003677BD /* LoginRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87491C91396E003677BD /* LoginRootViewController.m */; };
+		22B8D4691C8D58FB004A7267 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4681C8D58FB004A7267 /* ChatViewController.m */; };
+		22B8D46E1C8D599B004A7267 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D46D1C8D599B004A7267 /* ChatTableViewCell.m */; };
 		22B8D4CA1C8DAD8A004A7267 /* contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22B8D4C91C8DAD8A004A7267 /* contacts.plist */; };
 		22B8D4D01C8DB9E6004A7267 /* contactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4CF1C8DB9E6004A7267 /* contactsViewController.m */; };
-		22B8D4D31C8DBE86004A7267 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4D21C8DBE86004A7267 /* SearchResultsController.m */; };
-		22B8D4D71C8DCE01004A7267 /* chatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22B8D4D61C8DCE01004A7267 /* chatTableViewCell.xib */; };
+		22B8D4D31C8DBE86004A7267 /* ContactsSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4D21C8DBE86004A7267 /* ContactsSearchResultsController.m */; };
+		22B8D4D71C8DCE01004A7267 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22B8D4D61C8DCE01004A7267 /* ChatTableViewCell.xib */; };
 		22D971061C86F090001EE322 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D971051C86F090001EE322 /* main.m */; };
 		22D971091C86F090001EE322 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D971081C86F090001EE322 /* AppDelegate.m */; };
 		22D971121C86F090001EE322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22D971101C86F090001EE322 /* Main.storyboard */; };
@@ -40,16 +49,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		22B8D4671C8D58FB004A7267 /* chatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chatViewController.h; sourceTree = "<group>"; };
-		22B8D4681C8D58FB004A7267 /* chatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chatViewController.m; sourceTree = "<group>"; };
-		22B8D46C1C8D599B004A7267 /* chatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chatTableViewCell.h; sourceTree = "<group>"; };
-		22B8D46D1C8D599B004A7267 /* chatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chatTableViewCell.m; sourceTree = "<group>"; };
+		2224905E1C91500700D08491 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		2224905F1C91500700D08491 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		222A87271C902868003677BD /* ChatSearchResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSearchResultController.h; sourceTree = "<group>"; };
+		222A87281C902868003677BD /* ChatSearchResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSearchResultController.m; sourceTree = "<group>"; };
+		222A872A1C90502F003677BD /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
+		222A872B1C90502F003677BD /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
+		222A87301C905418003677BD /* ProfileAvatarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileAvatarCell.h; sourceTree = "<group>"; };
+		222A87311C905418003677BD /* ProfileAvatarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileAvatarCell.m; sourceTree = "<group>"; };
+		222A87331C905581003677BD /* ProfileInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileInfoCell.h; sourceTree = "<group>"; };
+		222A87341C905581003677BD /* ProfileInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileInfoCell.m; sourceTree = "<group>"; };
+		222A873C1C9069B6003677BD /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		222A873D1C9069B6003677BD /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		222A873F1C9128E8003677BD /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		222A87451C9129CE003677BD /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		222A87461C9129CE003677BD /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		222A87481C91396E003677BD /* LoginRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRootViewController.h; sourceTree = "<group>"; };
+		222A87491C91396E003677BD /* LoginRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRootViewController.m; sourceTree = "<group>"; };
+		22B8D4671C8D58FB004A7267 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		22B8D4681C8D58FB004A7267 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		22B8D46C1C8D599B004A7267 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
+		22B8D46D1C8D599B004A7267 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		22B8D4C91C8DAD8A004A7267 /* contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contacts.plist; sourceTree = "<group>"; };
 		22B8D4CE1C8DB9E6004A7267 /* contactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contactsViewController.h; sourceTree = "<group>"; };
 		22B8D4CF1C8DB9E6004A7267 /* contactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = contactsViewController.m; sourceTree = "<group>"; };
-		22B8D4D11C8DBE86004A7267 /* SearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
-		22B8D4D21C8DBE86004A7267 /* SearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
-		22B8D4D61C8DCE01004A7267 /* chatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = chatTableViewCell.xib; sourceTree = "<group>"; };
+		22B8D4D11C8DBE86004A7267 /* ContactsSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsSearchResultsController.h; sourceTree = "<group>"; };
+		22B8D4D21C8DBE86004A7267 /* ContactsSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsSearchResultsController.m; sourceTree = "<group>"; };
+		22B8D4D61C8DCE01004A7267 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
 		22D971011C86F090001EE322 /* withU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = withU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D971051C86F090001EE322 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		22D971071C86F090001EE322 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,13 +117,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2227C1161C8EAE800088A590 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				222A872A1C90502F003677BD /* ProfileTableViewController.h */,
+				222A872B1C90502F003677BD /* ProfileTableViewController.m */,
+				222A87331C905581003677BD /* ProfileInfoCell.h */,
+				222A87341C905581003677BD /* ProfileInfoCell.m */,
+				222A87301C905418003677BD /* ProfileAvatarCell.h */,
+				222A873C1C9069B6003677BD /* EditProfileViewController.h */,
+				222A873D1C9069B6003677BD /* EditProfileViewController.m */,
+				222A87311C905418003677BD /* ProfileAvatarCell.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		222A87441C91293A003677BD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				222A873F1C9128E8003677BD /* Login.storyboard */,
+				222A87451C9129CE003677BD /* RegisterViewController.h */,
+				222A87461C9129CE003677BD /* RegisterViewController.m */,
+				222A87481C91396E003677BD /* LoginRootViewController.h */,
+				222A87491C91396E003677BD /* LoginRootViewController.m */,
+				2224905E1C91500700D08491 /* LoginViewController.h */,
+				2224905F1C91500700D08491 /* LoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		225BA1EB1C882B0A002EB7D5 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
 				22B8D4CE1C8DB9E6004A7267 /* contactsViewController.h */,
 				22B8D4CF1C8DB9E6004A7267 /* contactsViewController.m */,
-				22B8D4D11C8DBE86004A7267 /* SearchResultsController.h */,
-				22B8D4D21C8DBE86004A7267 /* SearchResultsController.m */,
+				22B8D4D11C8DBE86004A7267 /* ContactsSearchResultsController.h */,
+				22B8D4D21C8DBE86004A7267 /* ContactsSearchResultsController.m */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -105,11 +160,13 @@
 		22B8D4661C8D58D1004A7267 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				22B8D4D61C8DCE01004A7267 /* chatTableViewCell.xib */,
-				22B8D4671C8D58FB004A7267 /* chatViewController.h */,
-				22B8D4681C8D58FB004A7267 /* chatViewController.m */,
-				22B8D46C1C8D599B004A7267 /* chatTableViewCell.h */,
-				22B8D46D1C8D599B004A7267 /* chatTableViewCell.m */,
+				22B8D4D61C8DCE01004A7267 /* ChatTableViewCell.xib */,
+				22B8D4671C8D58FB004A7267 /* ChatViewController.h */,
+				22B8D4681C8D58FB004A7267 /* ChatViewController.m */,
+				22B8D46C1C8D599B004A7267 /* ChatTableViewCell.h */,
+				22B8D46D1C8D599B004A7267 /* ChatTableViewCell.m */,
+				222A87271C902868003677BD /* ChatSearchResultController.h */,
+				222A87281C902868003677BD /* ChatSearchResultController.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -145,6 +202,8 @@
 		22D971031C86F090001EE322 /* withU */ = {
 			isa = PBXGroup;
 			children = (
+				222A87441C91293A003677BD /* Login */,
+				2227C1161C8EAE800088A590 /* Profile */,
 				22B8D4C81C8DAD79004A7267 /* data */,
 				22B8D4661C8D58D1004A7267 /* Chat */,
 				225BA1EB1C882B0A002EB7D5 /* Contacts */,
@@ -293,7 +352,8 @@
 			files = (
 				22D971171C86F090001EE322 /* LaunchScreen.storyboard in Resources */,
 				22D971141C86F090001EE322 /* Assets.xcassets in Resources */,
-				22B8D4D71C8DCE01004A7267 /* chatTableViewCell.xib in Resources */,
+				222A87401C9128E8003677BD /* Login.storyboard in Resources */,
+				22B8D4D71C8DCE01004A7267 /* ChatTableViewCell.xib in Resources */,
 				22D971121C86F090001EE322 /* Main.storyboard in Resources */,
 				22B8D4CA1C8DAD8A004A7267 /* contacts.plist in Resources */,
 			);
@@ -320,12 +380,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22B8D4D31C8DBE86004A7267 /* SearchResultsController.m in Sources */,
+				222A874A1C91396E003677BD /* LoginRootViewController.m in Sources */,
+				222A87291C902868003677BD /* ChatSearchResultController.m in Sources */,
+				222A873E1C9069B6003677BD /* EditProfileViewController.m in Sources */,
+				22B8D4D31C8DBE86004A7267 /* ContactsSearchResultsController.m in Sources */,
+				222490601C91500700D08491 /* LoginViewController.m in Sources */,
 				22D971091C86F090001EE322 /* AppDelegate.m in Sources */,
-				22B8D46E1C8D599B004A7267 /* chatTableViewCell.m in Sources */,
-				22B8D4691C8D58FB004A7267 /* chatViewController.m in Sources */,
+				222A87351C905581003677BD /* ProfileInfoCell.m in Sources */,
+				222A87321C905418003677BD /* ProfileAvatarCell.m in Sources */,
+				22B8D46E1C8D599B004A7267 /* ChatTableViewCell.m in Sources */,
+				22B8D4691C8D58FB004A7267 /* ChatViewController.m in Sources */,
+				222A87471C9129CE003677BD /* RegisterViewController.m in Sources */,
 				22D971061C86F090001EE322 /* main.m in Sources */,
 				22B8D4D01C8DB9E6004A7267 /* contactsViewController.m in Sources */,
+				222A872C1C90502F003677BD /* ProfileTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

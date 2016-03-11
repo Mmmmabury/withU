@@ -6,17 +6,18 @@
 //  Copyright © 2016年 cby. All rights reserved.
 //
 
-#import "chatViewController.h"
-#import "chatTableViewCell.h"
+#import "ChatViewController.h"
+#import "ChatTableViewCell.h"
+#import "ChatSearchResultController.h"
 
-@interface chatViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ChatViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSArray *chatData;
 
 @end
 
-@implementation chatViewController
+@implementation ChatViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,10 +37,21 @@
                       @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"}
                       ];
     
-    UINib *nib = [UINib nibWithNibName:@"chatTableViewCell" bundle:nil];
+    UINib *nib = [UINib nibWithNibName:@"ChatTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"chatCellTableIdentifier"];
 
-
+//    搜索栏
+    NSMutableArray *names = [[NSMutableArray alloc]init];
+    for (NSDictionary *dict in self.chatData)
+    {
+        [names addObject:dict[@"name"]];
+    }
+    ChatSearchResultController *resultController = [[ChatSearchResultController alloc] initWithData:[NSArray arrayWithArray:names]];
+    self.searchController = [[UISearchController alloc]initWithSearchResultsController:resultController];
+    UISearchBar *searchBar = self.searchController.searchBar;
+    searchBar.placeholder = @"搜索";
+    self.tableView.tableHeaderView = searchBar;
+    self.searchController.searchResultsUpdater = resultController;
 
 }
 
@@ -63,16 +75,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    chatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatCellTableIdentifier" forIndexPath:indexPath];
+    ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatCellTableIdentifier" forIndexPath:indexPath];
     
     NSDictionary *rowData = self.chatData[indexPath.row];
     
     cell.name = rowData[@"name"];
     cell.msg = rowData[@"msg"];
     cell.time = rowData[@"time"];
-//    cell.chatImageView.layer.cornerRadius = 10;
-
-
+    cell.chatImageView.layer.masksToBounds = YES;
+    cell.chatImageView.layer.cornerRadius = 4;
     return cell;
 
     
@@ -87,7 +98,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
 
 
 }
