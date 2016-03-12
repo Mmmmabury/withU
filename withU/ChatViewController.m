@@ -9,6 +9,7 @@
 #import "ChatViewController.h"
 #import "ChatTableViewCell.h"
 #import "ChatSearchResultController.h"
+#import "Chat.h"
 
 @interface ChatViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -52,6 +53,7 @@
     searchBar.placeholder = @"搜索";
     self.tableView.tableHeaderView = searchBar;
     self.searchController.searchResultsUpdater = resultController;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
 }
 
@@ -98,7 +100,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    Chat *chatView = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView"];
+//    chatView.view.frame = self.view.frame;
+    chatView.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:chatView animated:YES];
 
 
 }

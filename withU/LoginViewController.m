@@ -20,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.activityIndicator.hidden = YES;
+//    self.phoneNumber.layer.cornerRadius = 20;
     // Do any additional setup after loading the view.
 }
 
@@ -34,7 +35,7 @@
 - (IBAction)loginHandle:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
-    [NSThread sleepForTimeInterval:2.0];
+//    [NSThread sleepForTimeInterval:2.0];
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     [UIApplication sharedApplication].keyWindow.rootViewController = storyboard.instantiateInitialViewController;

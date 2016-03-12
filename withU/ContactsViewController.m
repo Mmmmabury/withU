@@ -9,10 +9,11 @@
 
 #import "contactsViewController.h"
 #import "ContactsSearchResultsController.h"
+#import "ProfileTableViewController.h"
 
 static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 
-@interface contactsViewController ()
+@interface contactsViewController () <UITableViewDelegate>
 
 @property (copy, nonatomic) NSDictionary *names;
 @property (copy, nonatomic) NSArray *keys;
@@ -98,4 +99,6 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 //    view.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+}
 @end

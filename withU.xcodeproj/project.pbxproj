@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		222490601C91500700D08491 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2224905F1C91500700D08491 /* LoginViewController.m */; };
+		222490641C928F2300D08491 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 222490631C928F2300D08491 /* Chat.m */; };
+		222490671C928F8F00D08491 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 222490661C928F8F00D08491 /* MessageCell.m */; };
 		222A87291C902868003677BD /* ChatSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87281C902868003677BD /* ChatSearchResultController.m */; };
 		222A872C1C90502F003677BD /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A872B1C90502F003677BD /* ProfileTableViewController.m */; };
 		222A87321C905418003677BD /* ProfileAvatarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87311C905418003677BD /* ProfileAvatarCell.m */; };
@@ -51,6 +53,10 @@
 /* Begin PBXFileReference section */
 		2224905E1C91500700D08491 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		2224905F1C91500700D08491 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		222490621C928F2300D08491 /* Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
+		222490631C928F2300D08491 /* Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
+		222490651C928F8F00D08491 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		222490661C928F8F00D08491 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		222A87271C902868003677BD /* ChatSearchResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSearchResultController.h; sourceTree = "<group>"; };
 		222A87281C902868003677BD /* ChatSearchResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSearchResultController.m; sourceTree = "<group>"; };
 		222A872A1C90502F003677BD /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
@@ -167,6 +173,10 @@
 				22B8D46D1C8D599B004A7267 /* ChatTableViewCell.m */,
 				222A87271C902868003677BD /* ChatSearchResultController.h */,
 				222A87281C902868003677BD /* ChatSearchResultController.m */,
+				222490621C928F2300D08491 /* Chat.h */,
+				222490631C928F2300D08491 /* Chat.m */,
+				222490651C928F8F00D08491 /* MessageCell.h */,
+				222490661C928F8F00D08491 /* MessageCell.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -390,8 +400,10 @@
 				222A87321C905418003677BD /* ProfileAvatarCell.m in Sources */,
 				22B8D46E1C8D599B004A7267 /* ChatTableViewCell.m in Sources */,
 				22B8D4691C8D58FB004A7267 /* ChatViewController.m in Sources */,
+				222490641C928F2300D08491 /* Chat.m in Sources */,
 				222A87471C9129CE003677BD /* RegisterViewController.m in Sources */,
 				22D971061C86F090001EE322 /* main.m in Sources */,
+				222490671C928F8F00D08491 /* MessageCell.m in Sources */,
 				22B8D4D01C8DB9E6004A7267 /* contactsViewController.m in Sources */,
 				222A872C1C90502F003677BD /* ProfileTableViewController.m in Sources */,
 			);
