@@ -41,5 +41,19 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)registerHandle:(id)sender {
+    NSString *url = [[NSString alloc]initWithFormat:@"http://127.0.0.1:8000/login?userPhoneNumber=%@&password=%@",self.phoneNumber.text, self.password.text];
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+       NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+           if (error == nil) {
+               
+           }
+       }];
+    
+    [task resume];
+}
 
 @end

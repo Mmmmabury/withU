@@ -89,7 +89,9 @@ static NSString *profileInfo = @"ProfileInfo";
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"你确定要注销账号吗" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"是的" style: UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            [UIApplication sharedApplication].keyWindow.rootViewController = storyboard.instantiateInitialViewController;
+//            [UIApplication sharedApplication].keyWindow.rootViewController = storyboard.instantiateInitialViewController;
+            UIViewController *cv = [storyboard instantiateViewControllerWithIdentifier:@"loginMain"];
+            [self presentViewController:cv animated:YES completion:nil];
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style: UIAlertActionStyleCancel handler:nil];
         [alert addAction: action];

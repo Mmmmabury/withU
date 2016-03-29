@@ -8,7 +8,6 @@
 
 #import "LoginRootViewController.h"
 
-
 @interface LoginRootViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
@@ -17,7 +16,6 @@
 @property (strong, nonatomic) UIViewController *loginController;
 @property (strong, nonatomic) UIViewController *registerController;
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
-
 @end
 
 @implementation LoginRootViewController
@@ -86,8 +84,5 @@
         [toVC didMoveToParentViewController:self];//可以不写，但是如果子控制器重写改方法是必须加。
     }
 }
-
-
-
 
 @end

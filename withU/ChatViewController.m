@@ -55,12 +55,17 @@
     self.searchController.searchResultsUpdater = resultController;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
+    
+    UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    UIViewController *cv = [loginStoryboard instantiateViewControllerWithIdentifier:@"loginMain"];
+    [self presentViewController:cv animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation
@@ -71,6 +76,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void) viewDidAppear:(BOOL)animated{
+
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.chatData.count;

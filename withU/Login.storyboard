@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E61b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P1f-HC-U3c">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P1f-HC-U3c">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -41,7 +41,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="loginHandle:" destination="lKi-wU-T2f" eventType="touchUpInside" id="5Ow-mW-OsV"/>
+                                    <action selector="loginHandle:" destination="lKi-wU-T2f" eventType="touchUpInside" id="pQ4-uG-kmC"/>
                                     <action selector="start:" destination="lKi-wU-T2f" eventType="touchDown" id="5uM-vr-Bnm"/>
                                 </connections>
                             </button>
@@ -49,6 +49,9 @@
                                 <rect key="frame" x="40" y="346" width="520" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="textFieldDidEdit:" destination="lKi-wU-T2f" eventType="editingDidEndOnExit" id="XQp-Wx-OfN"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-jv-GQL">
                                 <rect key="frame" x="40" y="270" width="520" height="53"/>
@@ -57,6 +60,9 @@
                                         <rect key="frame" x="50" y="12" width="420" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <action selector="textFieldDidEdit:" destination="lKi-wU-T2f" eventType="editingDidEndOnExit" id="JhF-LY-CQT"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -91,8 +97,8 @@
                     <connections>
                         <outlet property="activityIndicator" destination="Ngp-p0-Smi" id="KXX-fU-ScM"/>
                         <outlet property="avatarImage" destination="s86-gL-Bht" id="8fm-I3-5VC"/>
+                        <outlet property="loginQuery" destination="oCx-bN-YGl" id="zTB-gR-vdl"/>
                         <outlet property="password" destination="fUb-0q-DKY" id="JOj-SS-lcT"/>
-                        <outlet property="phoneNumber" destination="oCx-bN-YGl" id="kbR-TQ-w8d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QM-r8-JN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -123,9 +129,12 @@
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="registerHandle:" destination="ONG-Ul-Uvb" eventType="touchUpInside" id="APJ-i4-CeL"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfW-Ch-bjz">
-                                <rect key="frame" x="20" y="200" width="40" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfW-Ch-bjz">
+                                <rect key="frame" x="20" y="200" width="60" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -149,7 +158,7 @@
                                     <constraint firstAttribute="height" constant="90" id="twR-yE-ffo"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvg-vp-66p">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvg-vp-66p">
                                 <rect key="frame" x="68" y="197" width="512" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="3TM-JH-Mzl"/>
@@ -165,6 +174,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lJU-0g-wof">
+                                <rect key="frame" x="240" y="161" width="121" height="29"/>
+                                <segments>
+                                    <segment title="手机号"/>
+                                    <segment title="电子邮箱"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -206,7 +223,7 @@
         <!--Login Root View Controller-->
         <scene sceneID="WGi-SF-RfC">
             <objects>
-                <viewController id="P1f-HC-U3c" customClass="LoginRootViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginMain" id="P1f-HC-U3c" customClass="LoginRootViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9pN-3X-BbF"/>
                         <viewControllerLayoutGuide type="bottom" id="J1K-Sb-GAt"/>

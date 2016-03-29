@@ -9,10 +9,11 @@
 #import "LoginViewController.h"
 
 @interface LoginViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *phoneNumber;
+@property (weak, nonatomic) IBOutlet UITextField *loginQuery;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImage;
+@property (strong, nonatomic) NSString* messageFromServer;
 @end
 
 @implementation LoginViewController
@@ -29,20 +30,27 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)backgroundTap:(id)sender {
-    [self.phoneNumber resignFirstResponder];
+    [self.loginQuery resignFirstResponder];
     [self.password resignFirstResponder];
 }
-- (IBAction)loginHandle:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
+-(IBAction)textFieldDidEdit:(id)sender{
+    [sender resignFirstResponder];
+}
+
+- (IBAction)loginHandle:(id)sender {
+    [self requestServerLogin];
+//    [AFMInfoBanner showAndHideWithText:@"Error text" style:AFMInfoBannerStyleError];
+//    [[NSNotificationCenter defaultCenter]postNotificationName:@"dismissMe" object:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    NSLog(@"%@", self.messageFromServer);
 //    [NSThread sleepForTimeInterval:2.0];
-    [self.activityIndicator stopAnimating];
-    self.activityIndicator.hidden = YES;
-    [UIApplication sharedApplication].keyWindow.rootViewController = storyboard.instantiateInitialViewController;
+
+
 }
 - (IBAction)start:(id)sender {
-    self.activityIndicator.hidden = NO;
-    [self.activityIndicator startAnimating];
+//    self.activityIndicator.hidden = NO;
+//    [self.activityIndicator startAnimating];
 }
 
 /*
@@ -54,5 +62,52 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void) requestServerLogin{
+    NSString *url = [[NSString alloc]initWithFormat:@"http://127.0.0.1:8000/login?query=%@&password=%@",self.loginQuery.text, self.password.text];
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if(error == nil){
+            self.messageFromServer = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            message *m = [message yy_modelWithJSON: self.messageFromServer];
+            if ([[m status] isEqualToString:@"success"]) {
+                
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+            }else{
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    // __block variables aren't automatically retained
+                    // so we'd better make sure we have a reference we can keep
+//                    self.loginQuery.placeholder = @"错误";
+                    [AFMInfoBanner showAndHideWithText:@"账号或密码错误" style:AFMInfoBannerStyleError];
+//                     [self dismissViewControllerAnimated:YES completion:nil];
+                });
+                
+            }
+        }else{
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [AFMInfoBanner showAndHideWithText:@"服务器出错啦！请稍后连接" style:AFMInfoBannerStyleError];
+            });
+        }
+    }];
+    
+    [task resume];
+}
+
+//- (void) hh:(NSString *) message{
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style: UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+//        //                     [self dismissViewControllerAnimated:YES completion:nil];
+//        //                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        //                     [UIApplication sharedApplication].keyWindow.rootViewController = storyboard.instantiateInitialViewController;
+//    }];
+//    [alert addAction:cancelAction];
+//    [self presentViewController:alert animated:YES completion:nil];
+//    
+//}
 
 @end
