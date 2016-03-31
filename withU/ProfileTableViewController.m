@@ -25,6 +25,7 @@ static NSString *profileInfo = @"ProfileInfo";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.profileLabelText = @[@"昵称", @"性别", @"地区"];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -90,6 +91,7 @@ static NSString *profileInfo = @"ProfileInfo";
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"是的" style: UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 //            [UIApplication sharedApplication].keyWindow.rootViewController = storyboard.instantiateInitialViewController;
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLogin"];
             UIViewController *cv = [storyboard instantiateViewControllerWithIdentifier:@"loginMain"];
             [self presentViewController:cv animated:YES completion:nil];
         }];

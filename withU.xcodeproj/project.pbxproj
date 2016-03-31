@@ -33,6 +33,9 @@
 		22D971171C86F090001EE322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22D971151C86F090001EE322 /* LaunchScreen.storyboard */; };
 		22D971221C86F090001EE322 /* withUTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D971211C86F090001EE322 /* withUTests.m */; };
 		22D9712D1C86F090001EE322 /* withUUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D9712C1C86F090001EE322 /* withUUITests.m */; };
+		22EAAE851CABB0CF00115B85 /* sqliteHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EAAE841CABB0CF00115B85 /* sqliteHandle.m */; };
+		22EAAE881CABB12700115B85 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EAAE871CABB12700115B85 /* libsqlite3.dylib */; };
+		22EAAE8C1CABD7F000115B85 /* netWorkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EAAE8B1CABD7F000115B85 /* netWorkTool.m */; };
 		DC2D19DC9AD25953168FCDD0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6D7D5000FD113773165224 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +78,7 @@
 		222A87461C9129CE003677BD /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		222A87481C91396E003677BD /* LoginRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRootViewController.h; sourceTree = "<group>"; };
 		222A87491C91396E003677BD /* LoginRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRootViewController.m; sourceTree = "<group>"; };
+		222BFFD01CAB7C12006067A7 /* withUNetTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = withUNetTool.h; sourceTree = "<group>"; };
 		2248A0661CA91C0B001F978F /* LoginMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginMessage.m; sourceTree = "<group>"; };
 		2248A0681CA91C19001F978F /* LoginMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginMessage.h; sourceTree = "<group>"; };
 		2248A06C1CA94598001F978F /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
@@ -103,6 +107,11 @@
 		22D971281C86F090001EE322 /* withUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = withUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D9712C1C86F090001EE322 /* withUUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = withUUITests.m; sourceTree = "<group>"; };
 		22D9712E1C86F090001EE322 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22EAAE841CABB0CF00115B85 /* sqliteHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sqliteHandle.m; sourceTree = "<group>"; };
+		22EAAE861CABB0DB00115B85 /* sqliteHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sqliteHandle.h; sourceTree = "<group>"; };
+		22EAAE871CABB12700115B85 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
+		22EAAE8A1CABD7F000115B85 /* netWorkTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = netWorkTool.h; sourceTree = "<group>"; };
+		22EAAE8B1CABD7F000115B85 /* netWorkTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = netWorkTool.m; sourceTree = "<group>"; };
 		5C6D7D5000FD113773165224 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6664030D2ADE24522025CF7A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B6333F0BC6453928E8AE71C3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22EAAE881CABB12700115B85 /* libsqlite3.dylib in Frameworks */,
 				DC2D19DC9AD25953168FCDD0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +173,16 @@
 				2224905F1C91500700D08491 /* LoginViewController.m */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		222BFFCF1CAB7BD6006067A7 /* NetWorkingTool */ = {
+			isa = PBXGroup;
+			children = (
+				222BFFD01CAB7C12006067A7 /* withUNetTool.h */,
+				22EAAE8A1CABD7F000115B85 /* netWorkTool.h */,
+				22EAAE8B1CABD7F000115B85 /* netWorkTool.m */,
+			);
+			name = NetWorkingTool;
 			sourceTree = "<group>";
 		};
 		225BA1EB1C882B0A002EB7D5 /* Contacts */ = {
@@ -227,6 +247,8 @@
 		22D971031C86F090001EE322 /* withU */ = {
 			isa = PBXGroup;
 			children = (
+				22EAAE831CABB0B300115B85 /* sqlite */,
+				222BFFCF1CAB7BD6006067A7 /* NetWorkingTool */,
 				222A87441C91293A003677BD /* Login */,
 				2227C1161C8EAE800088A590 /* Profile */,
 				22B8D4C81C8DAD79004A7267 /* data */,
@@ -271,6 +293,15 @@
 			path = withUUITests;
 			sourceTree = "<group>";
 		};
+		22EAAE831CABB0B300115B85 /* sqlite */ = {
+			isa = PBXGroup;
+			children = (
+				22EAAE841CABB0CF00115B85 /* sqliteHandle.m */,
+				22EAAE861CABB0DB00115B85 /* sqliteHandle.h */,
+			);
+			name = sqlite;
+			sourceTree = "<group>";
+		};
 		81A208BA4877FF9FE74BC1A0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +314,7 @@
 		D681A874B058678E1C749D63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22EAAE871CABB12700115B85 /* libsqlite3.dylib */,
 				5C6D7D5000FD113773165224 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -485,11 +517,13 @@
 				22D971091C86F090001EE322 /* AppDelegate.m in Sources */,
 				222A87351C905581003677BD /* ProfileInfoCell.m in Sources */,
 				222A87321C905418003677BD /* ProfileAvatarCell.m in Sources */,
+				22EAAE851CABB0CF00115B85 /* sqliteHandle.m in Sources */,
 				22B8D46E1C8D599B004A7267 /* ChatTableViewCell.m in Sources */,
 				22B8D4691C8D58FB004A7267 /* ChatViewController.m in Sources */,
 				222490641C928F2300D08491 /* Chat.m in Sources */,
 				222A87471C9129CE003677BD /* RegisterViewController.m in Sources */,
 				22D971061C86F090001EE322 /* main.m in Sources */,
+				22EAAE8C1CABD7F000115B85 /* netWorkTool.m in Sources */,
 				222490671C928F8F00D08491 /* MessageCell.m in Sources */,
 				22B8D4D01C8DB9E6004A7267 /* contactsViewController.m in Sources */,
 				222A872C1C90502F003677BD /* ProfileTableViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "ChatTableViewCell.h"
 #import "ChatSearchResultController.h"
 #import "Chat.h"
+#import "netWorkTool.h"
 
 @interface ChatViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -55,7 +56,27 @@
     self.searchController.searchResultsUpdater = resultController;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentLoginView) name:@"presentLoginView" object:nil];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"isLogin"];
+    if (!isLogin) {
+        NSLog(@"islogin == no");
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"presentLoginView" object:nil];
+//        UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        UIViewController *cv = [loginStoryboard instantiateViewControllerWithIdentifier:@"loginMain"];
+//        [self presentViewController:cv animated:YES completion:nil];
+    }
+
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"loginSuccess" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"registerSuccess" object:nil];
     
+}
+
+
+- (void) handleSuccess{
+    [netWorkTool getFriends];
+}
+
+- (void) presentLoginView{
     UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     UIViewController *cv = [loginStoryboard instantiateViewControllerWithIdentifier:@"loginMain"];
     [self presentViewController:cv animated:YES completion:nil];

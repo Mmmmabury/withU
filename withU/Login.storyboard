@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P1f-HC-U3c">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P1f-HC-U3c">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -29,7 +29,7 @@
                                 <rect key="frame" x="281" y="281" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46W-Cc-oCW">
-                                <rect key="frame" x="40" y="418" width="520" height="40"/>
+                                <rect key="frame" x="40" y="360" width="520" height="40"/>
                                 <color key="backgroundColor" red="0.40000000000000002" green="0.64313725490196083" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="登录">
@@ -46,47 +46,35 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fUb-0q-DKY">
-                                <rect key="frame" x="40" y="346" width="520" height="30"/>
+                                <rect key="frame" x="40" y="288" width="520" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                 <connections>
                                     <action selector="textFieldDidEdit:" destination="lKi-wU-T2f" eventType="editingDidEndOnExit" id="XQp-Wx-OfN"/>
                                 </connections>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-jv-GQL">
-                                <rect key="frame" x="40" y="270" width="520" height="53"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="账号" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oCx-bN-YGl">
-                                        <rect key="frame" x="50" y="12" width="420" height="27"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <action selector="textFieldDidEdit:" destination="lKi-wU-T2f" eventType="editingDidEndOnExit" id="JhF-LY-CQT"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="oCx-bN-YGl" secondAttribute="trailing" constant="50" id="6pt-pc-qxL"/>
-                                    <constraint firstItem="oCx-bN-YGl" firstAttribute="top" secondItem="zTe-jv-GQL" secondAttribute="top" constant="12" id="BMh-fv-EVk"/>
-                                    <constraint firstItem="oCx-bN-YGl" firstAttribute="leading" secondItem="zTe-jv-GQL" secondAttribute="leading" constant="50" id="jae-E6-KO6"/>
-                                    <constraint firstAttribute="height" constant="53" id="v6D-QH-gje"/>
-                                </constraints>
-                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="手机号或者邮箱" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oCx-bN-YGl">
+                                <rect key="frame" x="40" y="235" width="520" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="textFieldDidEdit:" destination="lKi-wU-T2f" eventType="editingDidEndOnExit" id="JhF-LY-CQT"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.17254901960784313" green="0.41568627450980394" blue="0.65098039215686276" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="s86-gL-Bht" firstAttribute="top" secondItem="GEW-3M-4yJ" secondAttribute="bottom" constant="75" id="1iM-fz-lcg"/>
+                            <constraint firstItem="oCx-bN-YGl" firstAttribute="leading" secondItem="fpJ-Ww-rS1" secondAttribute="leadingMargin" constant="20" id="7KM-nc-osW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fUb-0q-DKY" secondAttribute="trailing" constant="20" id="9nA-yq-Yvj"/>
-                            <constraint firstItem="zTe-jv-GQL" firstAttribute="top" secondItem="s86-gL-Bht" secondAttribute="bottom" constant="85" id="BYh-Ma-bse"/>
-                            <constraint firstItem="zTe-jv-GQL" firstAttribute="leading" secondItem="fpJ-Ww-rS1" secondAttribute="leadingMargin" constant="20" id="Bp1-E9-9Ag"/>
+                            <constraint firstItem="oCx-bN-YGl" firstAttribute="top" secondItem="s86-gL-Bht" secondAttribute="bottom" constant="50" id="DM7-Iu-3TF"/>
                             <constraint firstItem="Ngp-p0-Smi" firstAttribute="centerY" secondItem="fpJ-Ww-rS1" secondAttribute="centerY" id="Jz9-sY-LYJ"/>
                             <constraint firstItem="Ngp-p0-Smi" firstAttribute="centerX" secondItem="fpJ-Ww-rS1" secondAttribute="centerX" id="S7Z-uY-ZqG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="46W-Cc-oCW" secondAttribute="trailing" constant="20" id="S8d-dj-Nni"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zTe-jv-GQL" secondAttribute="trailing" constant="20" id="WEr-PI-sai"/>
-                            <constraint firstItem="fUb-0q-DKY" firstAttribute="top" secondItem="zTe-jv-GQL" secondAttribute="bottom" constant="23" id="Wn4-s2-zHb"/>
+                            <constraint firstItem="fUb-0q-DKY" firstAttribute="top" secondItem="oCx-bN-YGl" secondAttribute="bottom" constant="23" id="VQo-Us-Cuo"/>
                             <constraint firstAttribute="leadingMargin" secondItem="fUb-0q-DKY" secondAttribute="leading" constant="-20" id="aRl-Cq-pel"/>
                             <constraint firstAttribute="leadingMargin" secondItem="46W-Cc-oCW" secondAttribute="leading" constant="-20" id="cJe-bh-hbP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oCx-bN-YGl" secondAttribute="trailing" constant="20" id="sNl-fz-ifg"/>
                             <constraint firstItem="46W-Cc-oCW" firstAttribute="top" secondItem="fUb-0q-DKY" secondAttribute="bottom" constant="42" id="tko-d4-dzp"/>
                             <constraint firstItem="s86-gL-Bht" firstAttribute="centerX" secondItem="fpJ-Ww-rS1" secondAttribute="centerX" id="yfl-SP-6Zj"/>
                         </constraints>
@@ -158,8 +146,8 @@
                                     <constraint firstAttribute="height" constant="90" id="twR-yE-ffo"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvg-vp-66p">
-                                <rect key="frame" x="68" y="197" width="512" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvg-vp-66p">
+                                <rect key="frame" x="88" y="197" width="492" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="3TM-JH-Mzl"/>
                                 </constraints>
@@ -183,7 +171,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.36862745099999999" green="0.36862745099999999" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="RCO-8a-6iO" firstAttribute="leading" secondItem="fFd-Jn-ecQ" secondAttribute="trailing" constant="8" id="1tK-Yq-7zH"/>
                             <constraint firstItem="a4k-ld-Q5s" firstAttribute="trailing" secondItem="tiB-a3-Gjf" secondAttribute="trailingMargin" id="88k-rN-t30"/>

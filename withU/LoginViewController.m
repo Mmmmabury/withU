@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-
+static NSString *host = @"127.0.0.1";
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *loginQuery;
 @property (weak, nonatomic) IBOutlet UITextField *password;
@@ -41,7 +41,7 @@
 - (IBAction)loginHandle:(id)sender {
     [self requestServerLogin];
 //    [AFMInfoBanner showAndHideWithText:@"Error text" style:AFMInfoBannerStyleError];
-//    [[NSNotificationCenter defaultCenter]postNotificationName:@"dismissMe" object:nil];
+//    [[NSNotificationCenter defaultCenter]postNotificationName:@"getFriends" object:nil];
 //    [self dismissViewControllerAnimated:YES completion:nil];
 //    NSLog(@"%@", self.messageFromServer);
 //    [NSThread sleepForTimeInterval:2.0];
@@ -64,7 +64,7 @@
 */
 
 - (void) requestServerLogin{
-    NSString *url = [[NSString alloc]initWithFormat:@"http://127.0.0.1:8000/login?query=%@&password=%@",self.loginQuery.text, self.password.text];
+    NSString *url = [[NSString alloc]initWithFormat:@"http://%@:8000/login?query=%@&password=%@", host, self.loginQuery.text, self.password.text];
     NSURL *URL = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
@@ -75,7 +75,8 @@
             self.messageFromServer = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
             message *m = [message yy_modelWithJSON: self.messageFromServer];
             if ([[m status] isEqualToString:@"success"]) {
-                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:self];
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isLogin"];
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
             }else{
@@ -83,7 +84,7 @@
                     // __block variables aren't automatically retained
                     // so we'd better make sure we have a reference we can keep
 //                    self.loginQuery.placeholder = @"错误";
-                    [AFMInfoBanner showAndHideWithText:@"账号或密码错误" style:AFMInfoBannerStyleError];
+                    [AFMInfoBanner showAndHideWithText:[m message] style:AFMInfoBannerStyleError];
 //                     [self dismissViewControllerAnimated:YES completion:nil];
                 });
                 

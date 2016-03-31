@@ -11,6 +11,7 @@
 #import <YYModel/YYModel.h>
 
 @interface message : NSObject
+@property(nonatomic, strong) NSNumber *userId;
 @property(nonatomic,strong) NSString *message;
 @property(nonatomic, strong) NSString *status;
 @property(nonatomic, strong) NSString *method;

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <AFMinfoBanner.h>
+#import "LoginMessage.h"
 @interface RegisterViewController : UIViewController
 
 
