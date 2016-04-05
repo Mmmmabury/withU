@@ -10,6 +10,7 @@
 #import "contactsViewController.h"
 #import "ContactsSearchResultsController.h"
 #import "ProfileTableViewController.h"
+#import "DetailViewController.h"
 
 static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 
@@ -28,14 +29,23 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:contactsTableViewIdentifier];
+    
     NSString *path = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"plist"];
     self.names = [NSDictionary dictionaryWithContentsOfFile:path];
     self.keys = [[self.names allKeys] sortedArrayUsingSelector:@selector(compare:)];
+//    self.hidesBottomBarWhenPushed = YES;
     
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"friends" ofType:@"json"];
+//    NSString *friends = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+//    NSArray *friendsArray = [NSJSONSerialization JSONObjectWithData:[friends dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+//    NSDictionary *friendDict;
+//    for (friendDict in friendsArray){
+    
+//    }
 //    搜索栏
     
     ContactsSearchResultsController *resultsController = [[ContactsSearchResultsController alloc] initWithNames:self.names keys:self.keys];
-    self.searchController = [[UISearchController alloc]initWithSearchResultsController:resultsController];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
     
     UISearchBar *searchBar = self.searchController.searchBar;
     searchBar.scopeButtonTitles = @[@"All", @"Short", @"Long"];
@@ -95,10 +105,16 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 //}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"fromContactToDetail"]) {
+        UITableViewCell *cell = sender;
+        DetailViewController *view = segue.destinationViewController;
+        view.userId = cell.textLabel.text;
+    }
 //    UIViewController *view = segue.destinationViewController;
 //    view.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
 }
 @end

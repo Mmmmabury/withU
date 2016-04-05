@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface Chat : UIViewController
-
+@property (nonatomic,strong) NSDictionary *friendDic;
+@property (nonatomic ,assign) BOOL isCall;
 @end

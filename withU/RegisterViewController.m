@@ -7,6 +7,7 @@
 //
 
 #import "RegisterViewController.h"
+//static NSString *host = @"139.129.119.91";
 static NSString *host = @"127.0.0.1";
 
 @interface RegisterViewController ()
@@ -53,12 +54,12 @@ static NSString *host = @"127.0.0.1";
                self.messageFromServer = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                message *m = [message yy_modelWithJSON: self.messageFromServer];
                if ([[m status] isEqualToString:@"success"]) {
-                   [[NSNotificationCenter defaultCenter] postNotificationName:@"registerSuccess" object:nil];
                    [[NSUserDefaults standardUserDefaults]setObject:[m userId] forKey:@"userId"];
                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isLogin"];
                    dispatch_sync(dispatch_get_main_queue(), ^{
-                       [AFMInfoBanner showAndHideWithText:[m message] style:AFMInfoBannerStyleError];
+                       [AFMInfoBanner showAndHideWithText:[m message] style:AFMInfoBannerStyleInfo];
                    });
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"registerSuccess" object:nil];
                    [self dismissViewControllerAnimated:YES completion:nil];
                }else{
                    dispatch_sync(dispatch_get_main_queue(), ^{

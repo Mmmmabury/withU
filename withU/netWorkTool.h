@@ -7,10 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface netWorkTool : NSObject
-
-+ (void) getFriends;
+#import "withUNetTool.h"
+@interface netWorkTool : NSObject <withUNetTool>
 
 
 @end

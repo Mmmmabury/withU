@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+//static NSString *host = @"139.129.119.91";
 static NSString *host = @"127.0.0.1";
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *loginQuery;
@@ -75,9 +76,17 @@ static NSString *host = @"127.0.0.1";
             self.messageFromServer = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
             message *m = [message yy_modelWithJSON: self.messageFromServer];
             if ([[m status] isEqualToString:@"success"]) {
+                [[NSUserDefaults standardUserDefaults]setObject:[m userId] forKey:@"userId"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:self];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isLogin"];
                 [self dismissViewControllerAnimated:YES completion:nil];
+                
+                NSDictionary *infoDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+                [userDef setObject:infoDict[@"userNickName"] forKey:@"nickName"];
+                [userDef setObject:infoDict[@"userArea"] forKey:@"area"];
+                [userDef setObject:infoDict[@"userAge"] forKey:@"age"];
+                [userDef setObject:infoDict[@"userSex"] forKey:@"sex"];
                 
             }else{
                 dispatch_sync(dispatch_get_main_queue(), ^{

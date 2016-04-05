@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @protocol withUNetTool <NSObject>
-
-
+@optional
+- (void) getFriendsFromServer;
+- (NSDictionary *) getInfoByUserId:(NSString *)userId;
+- (NSArray *) friendsFromFile;
+- (void) getProfile;
 @end

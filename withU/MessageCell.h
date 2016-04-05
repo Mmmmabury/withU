@@ -1,14 +1,18 @@
 //
 //  MessageCell.h
-//  withU
+//  WXChat
 //
-//  Created by cby on 16/3/11.
-//  Copyright © 2016年 cby. All rights reserved.
+//  Created by zsm on 14-11-26.
+//  Copyright (c) 2014年 zsm. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+@class CellFrameModel;
+#define textPadding 15
 
 @interface MessageCell : UITableViewCell
 
+@property (nonatomic, strong) CellFrameModel *cellFrame;
 
+@property (nonatomic, strong) NSDictionary *friendDic;
 @end

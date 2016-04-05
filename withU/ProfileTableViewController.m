@@ -17,7 +17,7 @@ static NSString *profileInfo = @"ProfileInfo";
 @interface ProfileTableViewController ()
 
 @property (strong, nonatomic) NSArray *profileLabelText;
-
+@property (strong, nonatomic) NSArray *friendsArray;
 @end
 
 @implementation ProfileTableViewController
@@ -26,11 +26,16 @@ static NSString *profileInfo = @"ProfileInfo";
     [super viewDidLoad];
     self.profileLabelText = @[@"昵称", @"性别", @"地区"];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sb) name:@"profileDidGet" object:nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) sb{
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -67,7 +72,26 @@ static NSString *profileInfo = @"ProfileInfo";
     } else if(indexPath.section == 1){
         ProfileInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:profileInfo forIndexPath:indexPath];
         cell.profileName = self.profileLabelText[indexPath.row];
-        cell.profileValue = @"hhh";
+        if (indexPath.row == 0) {
+            NSString *nickName = [[NSUserDefaults standardUserDefaults] objectForKey:@"nickName"];
+            cell.profileValue = nickName;
+        }
+        if (indexPath.row == 1) {
+            NSString *sex= [[NSUserDefaults standardUserDefaults] objectForKey:@"sex"];
+            if ([sex isEqualToString:@"NULL"]) {
+                cell.profileValue = @"未知";
+            }else{
+                cell.profileValue = sex;
+            }
+        }
+        if (indexPath.row == 2) {
+            NSString *area = [[NSUserDefaults standardUserDefaults] objectForKey:@"area"];
+            if ([area isEqualToString:@"NULL"]) {
+                cell.profileValue = @"未知";
+            }else{
+                cell.profileValue = area;
+            }
+        }
         return cell;
     }else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LogOut" forIndexPath:indexPath];
@@ -86,6 +110,8 @@ static NSString *profileInfo = @"ProfileInfo";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+    }
     if (indexPath.section == 2) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"你确定要注销账号吗" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"是的" style: UIAlertActionStyleDestructive handler:^(UIAlertAction *action){

@@ -11,11 +11,15 @@
 #import "ChatSearchResultController.h"
 #import "Chat.h"
 #import "netWorkTool.h"
+#import "withUNetTool.h"
 
-@interface ChatViewController () <UITableViewDelegate, UITableViewDataSource>
+static NSString *host = @"127.0.0.1";
+
+@interface ChatViewController () <UITableViewDelegate, UITableViewDataSource >
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSArray *chatData;
+@property (strong, nonatomic) id <withUNetTool> delegate;
 
 @end
 
@@ -65,15 +69,14 @@
 //        UIViewController *cv = [loginStoryboard instantiateViewControllerWithIdentifier:@"loginMain"];
 //        [self presentViewController:cv animated:YES completion:nil];
     }
-
+    self.delegate = [[netWorkTool alloc] init];
+    
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"loginSuccess" object:nil];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"registerSuccess" object:nil];
-    
 }
 
-
 - (void) handleSuccess{
-    [netWorkTool getFriends];
+    [self.delegate getFriendsFromServer];
 }
 
 - (void) presentLoginView{
@@ -130,11 +133,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    Chat *chatView = [self.storyboard instantiateViewControllerWithIdentifier:@"chatView"];
+    Chat *chatView = [[Chat alloc]init];
 //    chatView.view.frame = self.view.frame;
     chatView.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:chatView animated:YES];
-
 
 }
 @end
