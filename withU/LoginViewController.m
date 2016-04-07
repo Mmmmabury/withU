@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 //static NSString *host = @"139.129.119.91";
 static NSString *host = @"127.0.0.1";
+
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *loginQuery;
 @property (weak, nonatomic) IBOutlet UITextField *password;
@@ -64,6 +65,9 @@ static NSString *host = @"127.0.0.1";
 }
 */
 
+/**
+ *  向服务器请求登录
+ */
 - (void) requestServerLogin{
     NSString *url = [[NSString alloc]initWithFormat:@"http://%@:8000/login?query=%@&password=%@", host, self.loginQuery.text, self.password.text];
     NSURL *URL = [NSURL URLWithString:url];

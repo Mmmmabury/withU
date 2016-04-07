@@ -11,4 +11,7 @@
 @interface EditProfileViewController : UIViewController
 
 @property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) NSString *userId;
+@property (strong, nonatomic) NSString *info;
+
 @end

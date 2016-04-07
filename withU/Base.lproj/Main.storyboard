@@ -435,6 +435,10 @@
                             <constraint firstItem="WjI-zR-gWF" firstAttribute="leading" secondItem="R7w-Uv-kSt" secondAttribute="leadingMargin" constant="-20" id="yxt-yv-aIz"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="SZa-S5-O5W"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="editTextField" destination="wmA-P8-alr" id="VfH-x9-gkh"/>
                     </connections>

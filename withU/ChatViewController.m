@@ -14,6 +14,7 @@
 #import "withUNetTool.h"
 
 static NSString *host = @"127.0.0.1";
+//static NSString *host = @"139.129.119.91";
 
 @interface ChatViewController () <UITableViewDelegate, UITableViewDataSource >
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

@@ -1,7 +1,7 @@
 //
 //  LoginRootViewController.m
 //  withU
-//
+//  登录页面容器，容纳login 和 register 页面
 //  Created by cby on 16/3/10.
 //  Copyright © 2016年 cby. All rights reserved.
 //
@@ -39,6 +39,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *  跳转到注册页面
+ *
+ */
 - (IBAction)toRegister:(id)sender{
    
     [UIView beginAnimations:@"View Flip" context:NULL];
@@ -55,7 +59,10 @@
 
 }
 
-
+/**
+ *  跳转到登录页面
+ *
+ */
 
 - (IBAction)toLogin:(id)sender{
     [UIView beginAnimations:@"View Flip" context:NULL];
@@ -71,7 +78,12 @@
     self.loginLabel.hidden = YES;
 }
 
-
+/**
+ *  在登录界面和注册界面间跳转
+ *
+ *  @param fromVC 当前页面
+ *  @param toVC   跳转页面
+ */
 - (void) switchViewFromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
     if (fromVC != nil) {
         [fromVC willMoveToParentViewController:nil];

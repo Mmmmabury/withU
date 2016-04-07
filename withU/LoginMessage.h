@@ -1,7 +1,9 @@
 //
 //  message.h
 //  testbysj
-//
+
+//  message model 声明
+
 //  Created by cby on 16/3/28.
 //  Copyright © 2016年 cby. All rights reserved.
 //

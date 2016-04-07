@@ -34,6 +34,7 @@
     }
 }
 
+
 - (void)setProfileValue:(NSString *)profileValue{
     if (![profileValue isEqualToString:_profileValue]) {
         _profileValue = [profileValue copy];

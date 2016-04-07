@@ -26,7 +26,7 @@ static NSString *profileInfo = @"ProfileInfo";
     [super viewDidLoad];
     self.profileLabelText = @[@"昵称", @"性别", @"地区"];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sb) name:@"profileDidGet" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sb) name:@"updateSuccess" object:nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -34,9 +34,6 @@ static NSString *profileInfo = @"ProfileInfo";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void) sb{
-    [self.tableView reloadData];
-}
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
@@ -134,6 +131,8 @@ static NSString *profileInfo = @"ProfileInfo";
         ProfileInfoCell *cell = sender;
         EditProfileViewController *viewController = segue.destinationViewController;
         viewController.text = cell.profileValue;
+        viewController.userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+        viewController.info = cell.profileName;
     }
 }
 

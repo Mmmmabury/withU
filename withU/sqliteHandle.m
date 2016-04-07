@@ -18,7 +18,7 @@
                                                          NSUserDomainMask,
                                                          YES);
     NSString *documentDirectory = [paths lastObject];
-    return [documentDirectory stringByAppendingPathComponent:@"catalog.db"];
+    return [documentDirectory stringByAppendingPathComponent:@"contacts.db"];
 }
 
 /** 创建数据库 */
@@ -34,7 +34,7 @@
         // 不存在就创建
         NSString *defaultPath = [[[NSBundle mainBundle]
                                   resourcePath]
-                                 stringByAppendingPathComponent:@"catalog.db"];
+                                 stringByAppendingPathComponent:@"contacts.db"];
         // 拷贝文件到某文件路径
         success = [fileManager copyItemAtPath:defaultPath
                                        toPath:writableDB
