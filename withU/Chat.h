@@ -11,4 +11,5 @@
 @interface Chat : UIViewController
 @property (nonatomic,strong) NSDictionary *friendDic;
 @property (nonatomic ,assign) BOOL isCall;
+@property (nonatomic, strong) NSString *userId;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ContactsSearchResultsController.h"
+#import "DetailViewController.h"
 
 static NSString *SectionsTableIdentifier = @"SectionsTableIdentifier";
 
@@ -39,7 +40,8 @@ static NSString *SectionsTableIdentifier = @"SectionsTableIdentifier";
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.filteredNamesBackup count];
+//    return [self.filteredNamesBackup count];
+    return [self.filteredNames count];
 }
 
 - (instancetype)initWithNames:(NSDictionary *)names keys:(NSArray *)keys{
@@ -66,9 +68,9 @@ static const NSInteger longNamesButtonIndex = 2;
     if (searchString.length > 0) {
         // 使用谓词来进行过滤
         //predicateAll 是用来过滤出不判断 scope 的
-        NSPredicate *predicateAll = [NSPredicate predicateWithBlock:^BOOL(NSString *name, NSDictionary *b){
+        NSPredicate *predicateAll = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *name, NSDictionary *b){
             // 匹配字符串
-            NSRange range = [name rangeOfString:searchString options:NSCaseInsensitiveSearch];
+            NSRange range = [name[@"userNickName"] rangeOfString:searchString options:NSCaseInsensitiveSearch];
             return range.location != NSNotFound;
         }];
         //这个谓词是判断 scope
@@ -86,9 +88,9 @@ static const NSInteger longNamesButtonIndex = 2;
         // 提取每个字符串进行谓词检查
         for (NSString *key in self.keys) {
             NSArray *matchesAll = [self.names[key] filteredArrayUsingPredicate:predicateAll];
-            NSArray *matches = [self.names[key] filteredArrayUsingPredicate:predicate];
+//            NSArray *matches = [self.names[key] filteredArrayUsingPredicate:predicate];
             [self.filteredNames addObjectsFromArray:matchesAll];//这是搜索出来全部的结果
-            [self.filteredNamesBackup addObjectsFromArray:matches];//这是搜索出来后对 scope 给的条件进行过滤后的结果
+//            [self.filteredNamesBackup addObjectsFromArray:matches];//这是搜索出来后对 scope 给的条件进行过滤后的结果
         }
     }
 //    self.filteredNamesBackup = [self.filteredNames mutableCopy];
@@ -99,38 +101,47 @@ static const NSInteger longNamesButtonIndex = 2;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SectionsTableIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.filteredNamesBackup[indexPath.row];
+//    cell.textLabel.text = self.filteredNamesBackup[indexPath.row];
+    NSDictionary *friend = self.filteredNames[indexPath.row];
+    cell.textLabel.text = friend[@"userNickName"];
+    cell.detailTextLabel.hidden = YES;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [friend[@"userId"] intValue]];
     return cell;
 }
 
-// 当 scope 的选择改变时，调用这个方法
-- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope{
-    if (self.filteredNamesBackup.count > 0 && self.filteredNames.count > 0) {
-        
-        self.filteredNamesBackup = [self.filteredNames mutableCopy];
-        NSArray * array = [NSArray arrayWithArray: self.filteredNamesBackup];
-        for(NSString *str in array){
-            switch (selectedScope) {
-                case 0:
-                    self.filteredNamesBackup = [self.filteredNames mutableCopy];
-                    break;
-                case shortNamesButtonIndex:
-                    if (str.length >= 6) {
-                        [self.filteredNamesBackup removeObject:str];
-                    }
-                    break;
-                case longNamesButtonIndex:
-                    if (str.length < 6) {
-                        [self.filteredNamesBackup removeObject:str];
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    [self.tableView reloadData];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
 }
+
+
+// 当 scope 的选择改变时，调用这个方法
+//- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope{
+//    if (self.filteredNamesBackup.count > 0 && self.filteredNames.count > 0) {
+//        
+//        self.filteredNamesBackup = [self.filteredNames mutableCopy];
+//        NSArray * array = [NSArray arrayWithArray: self.filteredNamesBackup];
+//        for(NSString *str in array){
+//            switch (selectedScope) {
+//                case 0:
+//                    self.filteredNamesBackup = [self.filteredNames mutableCopy];
+//                    break;
+//                case shortNamesButtonIndex:
+//                    if (str.length >= 6) {
+//                        [self.filteredNamesBackup removeObject:str];
+//                    }
+//                    break;
+//                case longNamesButtonIndex:
+//                    if (str.length < 6) {
+//                        [self.filteredNamesBackup removeObject:str];
+//                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
+//
+//    [self.tableView reloadData];
+//}
 
 @end

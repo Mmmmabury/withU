@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailViewController : UITableViewController
-@property (strong, nonatomic) NSString *userId;
+@property (strong, nonatomic) NSDictionary *friendDict;
+
 @end

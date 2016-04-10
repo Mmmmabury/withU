@@ -30,28 +30,28 @@ static NSString *host = @"127.0.0.1";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.chatData = @[@{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
-                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
-                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
-                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
-                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"}
-                      ];
+//    self.chatData = @[@{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
+//                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
+//                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
+//                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
+//                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"}
+//                      ];
     
     UINib *nib = [UINib nibWithNibName:@"ChatTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"chatCellTableIdentifier"];
-
+    [self loadData];
 //    搜索栏
     NSMutableArray *names = [[NSMutableArray alloc]init];
     for (NSDictionary *dict in self.chatData)
     {
-        [names addObject:dict[@"name"]];
+        [names addObject:dict[@"nickName"]];
     }
     ChatSearchResultController *resultController = [[ChatSearchResultController alloc] initWithData:[NSArray arrayWithArray:names]];
     self.searchController = [[UISearchController alloc]initWithSearchResultsController:resultController];
@@ -72,12 +72,57 @@ static NSString *host = @"127.0.0.1";
     }
     self.delegate = [[netWorkTool alloc] init];
     
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"loginSuccess" object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"registerSuccess" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:@"loginSuccess" object:nil];
+//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"registerSuccess" object:nil];
 }
 
-- (void) handleSuccess{
+/**
+ *  加载聊天数据
+ */
+- (void) loadData{
+    
+    NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    // 好友数据路径，放在沙盒的 document 目录下
+    NSString *docpath = [docpaths objectAtIndex:0];
+    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    NSDictionary *chatDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
+    NSArray *userIdArray = [[chatDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    
+    docpath = [docpaths[0] stringByAppendingString:@"c.plist"];
+    NSDictionary *friendsDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
+    NSArray *allFriendsInfo = [friendsDict allValues];
+    NSMutableArray *chatData = [[NSMutableArray alloc] init];
+    for (NSString *friendId in userIdArray){
+        for (NSArray *friends in allFriendsInfo){
+            
+            if (friends.count == 0) {
+                
+                continue;
+            }else{
+                for(NSDictionary *friend in friends){
+                    
+                    
+                    if ([[NSString stringWithFormat:@"%d" ,[friend[@"userId"] intValue]] isEqualToString: friendId]) {
+                        
+                        NSMutableDictionary *chatInfo = [[chatDict[friendId]lastObject] mutableCopy];
+                        [chatInfo setObject:friendId forKey:@"friendId"];
+                        [chatInfo setObject:friend[@"userNickName"] forKey:@"nickName"];
+                        [chatData addObject:chatInfo];
+                    }
+                }
+            }
+        }
+    }
+    self.chatData = [chatData copy];
+}
+
+- (void) loginSuccess{
+    
+    // 登陆成功初始化好友
     [self.delegate getFriendsFromServer];
+    // 初始化聊天数据
+    [self.delegate initMessageData];
+    [self.tableView reloadData];
 }
 
 - (void) presentLoginView{
@@ -115,11 +160,12 @@ static NSString *host = @"127.0.0.1";
     
     NSDictionary *rowData = self.chatData[indexPath.row];
     
-    cell.name = rowData[@"name"];
-    cell.msg = rowData[@"msg"];
+    cell.name = rowData[@"nickName"];
+    cell.msg = rowData[@"text"];
     cell.time = rowData[@"time"];
     cell.chatImageView.layer.masksToBounds = YES;
     cell.chatImageView.layer.cornerRadius = 4;
+    cell.friendId = rowData[@"friendId"];
     return cell;
 
     
@@ -135,6 +181,8 @@ static NSString *host = @"127.0.0.1";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Chat *chatView = [[Chat alloc]init];
+    NSDictionary *rowData = self.chatData[indexPath.row];
+    chatView.userId = rowData[@"friendId"];
 //    chatView.view.frame = self.view.frame;
     chatView.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:chatView animated:YES];

@@ -19,6 +19,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MQTTKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,12 +42,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>35DEA05EEBA6DB87F1BDDE2480593528</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>407ADEFA62030F7CA0205AEC52CCD245</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6673B0043B5D01F5740A949FB609F140</key>
+		<key>74CD2F578138157E0B27CCEE08C069EF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79401B128739198847B63F8433E3CE0B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,7 +72,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9AFDB0FB4F094C3314123063AAEF7A40</key>
+		<key>9F12FB4A63E20F601CFB2E64A65B57C1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

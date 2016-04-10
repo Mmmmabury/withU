@@ -19,5 +19,7 @@
 - (NSArray *) getFriendsFromFile;
 - (void) getProfile;
 - (void) updateInfo: (NSString *) method value: (NSString *) value userId: (NSString *) userId;
-
+- (void) deleteFriend: (NSString *) userId;
+- (void) addFriend: (NSString *) friendId;
+- (void) initMessageData;
 @end

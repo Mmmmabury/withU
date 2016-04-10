@@ -61,14 +61,26 @@
 }
 */
 - (void) updateSuccess{
+
+        if ([self.info isEqualToString:@"userNickName"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.editTextField.text forKey:@"nickName"];
+        }
+        if ([self.info isEqualToString:@"userSex"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.editTextField.text forKey:@"sex"];
+        }
+        if ([self.info isEqualToString:@"userArea"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.editTextField.text forKey:@"area"];
+        }
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });
-    if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
-        [[NSUserDefaults standardUserDefaults] setObject:self.editTextField.text forKey:@"userId"];
-    }else{
-        
-    }
+//    if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]]) {
+//        [[NSUserDefaults standardUserDefaults] setObject:self.editTextField.text forKey:@"userId"];
+//    }
+//    }else{
+    
+//    }
+//   [self.navigationController popViewControllerAnimated:YES];
     NSLog(@"updateSuccess");
 }
 

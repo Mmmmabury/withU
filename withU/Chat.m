@@ -1,9 +1,9 @@
 //
-//  ChatViewController.m
-//  WXChat
+//  Chat.m
+//  withU
 //
-//  Created by zsm on 14-12-15.
-//  Copyright (c) 2014年 zsm. All rights reserved.
+//  Created by cby on 16/3/11.
+//  Copyright © 2016年 cby. All rights reserved.
 //
 
 #import "Chat.h"
@@ -62,9 +62,14 @@
  */
 - (void)loadData
 {
+//    self.userId = @"10000";
     _cellFrameDatas =[NSMutableArray array];
-    NSURL *dataUrl = [[NSBundle mainBundle] URLForResource:@"messages.plist" withExtension:nil];
-    NSArray *dataArray = [NSArray arrayWithContentsOfURL:dataUrl];
+    NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    // 好友数据路径，放在沙盒的 document 目录下
+    NSString *docpath = [docpaths objectAtIndex:0];
+    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    NSDictionary *dataDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
+    NSArray *dataArray = dataDict[self.userId];
     for (NSDictionary *dict in dataArray) {
         MessageModel *message = [MessageModel messageModelWithDict:dict];
         CellFrameModel *lastFrame = [_cellFrameDatas lastObject];
@@ -104,34 +109,37 @@
     _toolBar = bgView;
     [self.view addSubview:bgView];
     
-    UIButton *sendSoundBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sendSoundBtn.frame = CGRectMake(0, 0, kToolBarH, kToolBarH);
-    [sendSoundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
-    [bgView addSubview:sendSoundBtn];
-    
-    UIButton *addMoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    addMoreBtn.frame = CGRectMake(self.view.frame.size.width - kToolBarH, 0, kToolBarH, kToolBarH);
-    [addMoreBtn setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
-    [bgView addSubview:addMoreBtn];
-    
-    UIButton *expressBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    expressBtn.frame = CGRectMake(self.view.frame.size.width - kToolBarH * 2, 0, kToolBarH, kToolBarH);
-    [expressBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_nor"] forState:UIControlStateNormal];
-    [bgView addSubview:expressBtn];
+//    UIButton *sendSoundBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    sendSoundBtn.frame = CGRectMake(0, 0, kToolBarH, kToolBarH);
+//    [sendSoundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
+//    sendSoundBtn.hidden = YES;
+//    [bgView addSubview:sendSoundBtn];
+//    
+//    UIButton *addMoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    addMoreBtn.frame = CGRectMake(self.view.frame.size.width - kToolBarH, 0, kToolBarH, kToolBarH);
+//    [addMoreBtn setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
+//    addMoreBtn.hidden = YES;
+//    [bgView addSubview:addMoreBtn];
+//    
+//    UIButton *expressBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    expressBtn.frame = CGRectMake(self.view.frame.size.width - kToolBarH * 2, 0, kToolBarH, kToolBarH);
+//    [expressBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_nor"] forState:UIControlStateNormal];
+//    expressBtn.hidden = YES;
+//    [bgView addSubview:expressBtn];
     
     _textField = [[UITextField alloc] init];
     _textField.returnKeyType = UIReturnKeySend;
     _textField.enablesReturnKeyAutomatically = YES;
     _textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 1)];
     _textField.leftViewMode = UITextFieldViewModeAlways;
-    _textField.frame = CGRectMake(kToolBarH, (kToolBarH - kTextFieldH) * 0.5, self.view.frame.size.width - 3 * kToolBarH, kTextFieldH);
+//    _textField.frame = CGRectMake(kToolBarH, (kToolBarH - kTextFieldH) * 0.5, self.view.frame.size.width - 3 * kToolBarH, kTextFieldH);
+    _textField.frame = CGRectMake(15, (kToolBarH - kTextFieldH) * 0.5, self.view.frame.size.width - 27, kTextFieldH);
     _textField.background = [UIImage imageNamed:@"chat_bottom_textfield"];
     _textField.delegate = self;
     [bgView addSubview:_textField];
 }
 
 
-#pragma mark - tableView的数据源和代理方法
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _cellFrameDatas.count;
@@ -158,11 +166,6 @@
     CellFrameModel *cellFrame = _cellFrameDatas[indexPath.row];
     return cellFrame.cellHeght;
 }
-//
-//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-//{
-//    [_textField resignFirstResponder];
-//}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
@@ -180,7 +183,6 @@
     }
 }
 
-#pragma mark - UITextField的代理方法
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //1.获得时间

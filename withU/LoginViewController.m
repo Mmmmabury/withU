@@ -81,7 +81,6 @@ static NSString *host = @"127.0.0.1";
             message *m = [message yy_modelWithJSON: self.messageFromServer];
             if ([[m status] isEqualToString:@"success"]) {
                 [[NSUserDefaults standardUserDefaults]setObject:[m userId] forKey:@"userId"];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:self];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isLogin"];
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
@@ -91,6 +90,8 @@ static NSString *host = @"127.0.0.1";
                 [userDef setObject:infoDict[@"userArea"] forKey:@"area"];
                 [userDef setObject:infoDict[@"userAge"] forKey:@"age"];
                 [userDef setObject:infoDict[@"userSex"] forKey:@"sex"];
+               [[NSNotificationCenter defaultCenter]postNotificationName:@"loginSuccess" object:self]; 
+                
                 
             }else{
                 dispatch_sync(dispatch_get_main_queue(), ^{

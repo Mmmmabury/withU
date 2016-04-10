@@ -28,10 +28,10 @@
 		222A87471C9129CE003677BD /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87461C9129CE003677BD /* RegisterViewController.m */; };
 		222A874A1C91396E003677BD /* LoginRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A87491C91396E003677BD /* LoginRootViewController.m */; };
 		2248A0671CA91C0B001F978F /* LoginMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2248A0661CA91C0B001F978F /* LoginMessage.m */; };
+		225AC7141CBA0EEC00EA25FA /* chatMessages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 225AC7131CBA0EEC00EA25FA /* chatMessages.plist */; };
 		226348591CB6380A00B70750 /* c.plist in Resources */ = {isa = PBXBuildFile; fileRef = 226348581CB6380A00B70750 /* c.plist */; };
 		22B8D4691C8D58FB004A7267 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4681C8D58FB004A7267 /* ChatViewController.m */; };
 		22B8D46E1C8D599B004A7267 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D46D1C8D599B004A7267 /* ChatTableViewCell.m */; };
-		22B8D4CA1C8DAD8A004A7267 /* contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22B8D4C91C8DAD8A004A7267 /* contacts.plist */; };
 		22B8D4D01C8DB9E6004A7267 /* contactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4CF1C8DB9E6004A7267 /* contactsViewController.m */; };
 		22B8D4D31C8DBE86004A7267 /* ContactsSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8D4D21C8DBE86004A7267 /* ContactsSearchResultsController.m */; };
 		22B8D4D71C8DCE01004A7267 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22B8D4D61C8DCE01004A7267 /* ChatTableViewCell.xib */; };
@@ -107,12 +107,12 @@
 		222BFFD01CAB7C12006067A7 /* withUNetTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = withUNetTool.h; sourceTree = "<group>"; };
 		2248A0661CA91C0B001F978F /* LoginMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginMessage.m; sourceTree = "<group>"; };
 		2248A0681CA91C19001F978F /* LoginMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginMessage.h; sourceTree = "<group>"; };
+		225AC7131CBA0EEC00EA25FA /* chatMessages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = chatMessages.plist; sourceTree = "<group>"; };
 		226348581CB6380A00B70750 /* c.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = c.plist; sourceTree = "<group>"; };
 		22B8D4671C8D58FB004A7267 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		22B8D4681C8D58FB004A7267 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		22B8D46C1C8D599B004A7267 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		22B8D46D1C8D599B004A7267 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
-		22B8D4C91C8DAD8A004A7267 /* contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contacts.plist; sourceTree = "<group>"; };
 		22B8D4CE1C8DB9E6004A7267 /* contactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contactsViewController.h; sourceTree = "<group>"; };
 		22B8D4CF1C8DB9E6004A7267 /* contactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = contactsViewController.m; sourceTree = "<group>"; };
 		22B8D4D11C8DBE86004A7267 /* ContactsSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsSearchResultsController.h; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				220761FE1CACFDC700F9F85A /* messages.plist */,
-				22B8D4C91C8DAD8A004A7267 /* contacts.plist */,
+				225AC7131CBA0EEC00EA25FA /* chatMessages.plist */,
 				226348581CB6380A00B70750 /* c.plist */,
 			);
 			name = data;
@@ -498,10 +498,10 @@
 				22D971141C86F090001EE322 /* Assets.xcassets in Resources */,
 				222A87401C9128E8003677BD /* Login.storyboard in Resources */,
 				22B8D4D71C8DCE01004A7267 /* ChatTableViewCell.xib in Resources */,
+				225AC7141CBA0EEC00EA25FA /* chatMessages.plist in Resources */,
 				226348591CB6380A00B70750 /* c.plist in Resources */,
 				220761FF1CACFDC700F9F85A /* messages.plist in Resources */,
 				22D971121C86F090001EE322 /* Main.storyboard in Resources */,
-				22B8D4CA1C8DAD8A004A7267 /* contacts.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +747,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cby.wU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -760,6 +761,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cby.wU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

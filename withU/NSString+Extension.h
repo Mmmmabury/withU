@@ -1,9 +1,9 @@
 //
-//  NSString+Extension.h
-//  WXChat
+//  NString+Extension.h
+//  withU
 //
-//  Created by zsm on 14-12-5.
-//  Copyright (c) 2014年 zsm. All rights reserved.
+//  Created by cby on 16/3/11.
+//  Copyright © 2016年 cby. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

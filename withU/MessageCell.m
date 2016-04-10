@@ -1,9 +1,9 @@
 //
 //  MessageCell.m
-//  WXChat
+//  withU
 //
-//  Created by zsm on 14-11-26.
-//  Copyright (c) 2014年 zsm. All rights reserved.
+//  Created by cby on 16/3/11.
+//  Copyright © 2016年 cby. All rights reserved.
 //
 
 #import "MessageCell.h"
