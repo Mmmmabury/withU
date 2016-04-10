@@ -70,9 +70,10 @@ static NSString *host = @"127.0.0.1";
 //        UIViewController *cv = [loginStoryboard instantiateViewControllerWithIdentifier:@"loginMain"];
 //        [self presentViewController:cv animated:YES completion:nil];
     }
-    self.delegate = [[netWorkTool alloc] init];
-    
+    self.delegate = [[netWorkTool alloc] initWithMqttClientId:@"sub"];
+    [self.delegate mqttSub];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:@"loginSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:@"receiveMessage" object:nil];
 //     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"registerSuccess" object:nil];
 }
 
@@ -82,7 +83,7 @@ static NSString *host = @"127.0.0.1";
 - (void) loadData{
     
     NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    // 好友数据路径，放在沙盒的 document 目录下
+    // 聊天数据路径，放在沙盒的 document 目录下
     NSString *docpath = [docpaths objectAtIndex:0];
     docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
     NSDictionary *chatDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
@@ -122,7 +123,38 @@ static NSString *host = @"127.0.0.1";
     [self.delegate getFriendsFromServer];
     // 初始化聊天数据
     [self.delegate initMessageData];
+    [self.delegate mqttSub];
     [self.tableView reloadData];
+}
+
+- (void) receiveMessage:(NSNotification *)notification{
+    
+    NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *docpath = [docpaths objectAtIndex:0];
+    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    NSMutableDictionary *chatDict = [[NSDictionary dictionaryWithContentsOfFile:docpath] mutableCopy];
+    
+    NSDictionary *dict = [notification userInfo];
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *currentDateString = [dateFormatter stringFromDate:date];
+    
+    NSArray *keys = [chatDict allKeys];
+    NSUInteger result = [keys indexOfObject:dict[@"userId"]];
+    if (result == NSNotFound) {
+        NSLog(@"notfind");
+    }
+    NSMutableArray *chatArray = [chatDict[dict[@"userId"]] mutableCopy];
+    NSDictionary *messageDict = @{@"text": dict[@"text"], @"time": currentDateString, @"type": @"1"};
+    [chatArray addObject: messageDict];
+    
+    [chatDict setObject:chatArray forKey:dict[@"userId"]];
+    [chatDict writeToFile:docpath atomically:YES];
+    [self loadData];
+    [self.tableView reloadData];
+    
+    
 }
 
 - (void) presentLoginView{

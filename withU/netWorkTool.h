@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "withUNetTool.h"
+
 @interface netWorkTool : NSObject <withUNetTool>
 
 
+- (instancetype) initWithMqttClientId: (NSString *) clientId;
 @end

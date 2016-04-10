@@ -8,13 +8,15 @@
 
 #import "netWorkTool.h"
 #import "LoginMessage.h"
+#import <MQTTKit.h>
+
 
 #define HOST @"127.0.0.1"
 //#define HOST @"139.129.119.91"
 @interface netWorkTool()
 
-@property NSString *name;
-
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) MQTTClient *client;
 @end
 
 @implementation netWorkTool
@@ -69,7 +71,7 @@
 /**
  *
  *
- *  @param nickName <#nickName description#>
+ *  @param nickName
  */
 - (void) getFriendInfoFromServer: (NSString *) nickName{
     
@@ -95,7 +97,9 @@
 }
 
 
-- (void) updateInfo: (NSString *) method value: (NSString *) value userId: (NSString *) userId{
+- (void) updateInfo: (NSString *) method
+              value: (NSString *) value
+             userId: (NSString *) userId{
     
     NSString *url = [[NSString alloc] initWithFormat:@"http://%@:8000/update?userId=%@&%@=%@", HOST, userId, method, value];
     NSURL *URL = [NSURL URLWithString:url];
@@ -211,5 +215,123 @@
     docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
     [chatData writeToFile:docpath atomically:YES];
 }
+
+- (instancetype) initWithMqttClientId: (NSString *) clientType{
+    
+    NSString *userId = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] stringValue];
+    self  = [super init];
+    if (self) {
+        
+        self.client = [[MQTTClient alloc] initWithClientId: [userId stringByAppendingString:clientType]];
+      
+    }
+    return self;
+}
+
+- (void) mqttPubtext: (NSString *) message
+        andTopic: (NSString *) topic{
+    
+//    self.client = [[MQTTClient alloc] initWithClientId: @"mqttPub"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //code here
+        [self.client connectToHost:HOST completionHandler:nil];
+        if (self.client.connected == ConnectionAccepted) {
+            
+            [self.client publishString:message
+                               toTopic:topic
+                               withQos:AtMostOnce
+                                retain:YES
+                     completionHandler:nil];
+        }
+        [self.client disconnectWithCompletionHandler:nil];
+    });
+
+
+
+}
+
+- (void) mqttSub{
+//    self.client = [[MQTTClient alloc] initWithClientId: @"mqttsub"];
+   [self.client connectToHost:HOST completionHandler:nil];
+    NSString *userId = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] stringValue];
+    NSLog(@"mqttSub");
+    [self.client subscribe:[@"/ID/" stringByAppendingString:userId]
+     withCompletionHandler:nil];
+    
+    
+    [self.client setMessageHandler:^(MQTTMessage *mqtt) {
+        NSString *text = [mqtt payloadString];
+        NSString *senderId = [[text componentsSeparatedByString:@"&"] objectAtIndex:0];
+        NSString *message = [[text componentsSeparatedByString:@"&"][0] stringByAppendingString:@"："];
+        message = [message stringByAppendingString:[text componentsSeparatedByString:@"&"][1]];
+        NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+        // 好友数据路径，放在沙盒的 document 目录下
+        NSString *docpath = [docpaths objectAtIndex:0];
+        docpath = [docpath stringByAppendingString:@"c.plist"];
+        NSDictionary *friendsDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
+        NSDictionary *f;
+        NSArray *friends = [friendsDict allValues];
+        for(NSArray *friendByKey in friends){
+            
+            if (friendByKey.count == 0) {
+                
+                continue;
+            }else{
+                
+                for(NSDictionary *friendInfo in friendByKey){
+                    
+                    if ([[friendInfo[@"userId"] stringValue] isEqualToString:senderId]) {
+                        
+                        f = friendInfo;
+                        break;
+                    }
+                }
+            }
+        }
+                UILocalNotification *notification=[[UILocalNotification alloc] init];
+                if (notification!=nil) {
+                    
+                    NSDate *now=[[NSDate alloc] init];
+                    notification.fireDate=now; //触发通知的时间
+                    
+                    notification.timeZone=[NSTimeZone defaultTimeZone];
+                    notification.soundName = UILocalNotificationDefaultSoundName;
+                    notification.alertTitle = f[@"userNickName"];
+                    notification.alertBody= message;
+                    notification.applicationIconBadgeNumber = 1; //设置app图标右上角的数字
+                    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+                    NSDictionary *infoDict = @{@"text": [text componentsSeparatedByString:@"&"][1], @"userId": senderId};
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"receiveMessage" object:nil userInfo:infoDict];
+                }
+    }];
+}
+
+- (void) localNote: (NSString *) nickName
+        andMessage: (NSString *) m{
+    
+    UILocalNotification *notification=[[UILocalNotification alloc] init];
+    if (notification!=nil) {
+        
+        NSDate *now=[[NSDate alloc] init];
+        notification.fireDate=now; //触发通知的时间
+        //        notification.repeatInterval=0; //循环次数，kCFCalendarUnitWeekday一周一次
+        
+        notification.timeZone=[NSTimeZone defaultTimeZone];
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody=@"收到消息啦";
+        
+//        notification.alertAction = @"打开";  //提示框按钮
+//        notification.hasAction = NO; //是否显示额外的按钮，为no时alertAction消失
+        
+        notification.applicationIconBadgeNumber = 1; //设置app图标右上角的数字
+        
+        //下面设置本地通知发送的消息，这个消息可以接受
+//        NSDictionary* infoDic = [NSDictionary dictionaryWithObject:@"value" forKey:@"key"];
+//        notification.userInfo = infoDic;
+        //发送通知
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    }
+}
+
 @end
 

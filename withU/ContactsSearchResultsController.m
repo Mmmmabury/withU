@@ -55,14 +55,10 @@ static NSString *SectionsTableIdentifier = @"SectionsTableIdentifier";
     return self;
 }
 
-static const NSUInteger longNameSize = 6;
-static const NSInteger shortNamesButtonIndex = 1;
-static const NSInteger longNamesButtonIndex = 2;
 
 // 实现代理，更新查询的数据
 - (void)updateSearchResultsForSearchController:(UISearchController *)controller{
     NSString *searchString = controller.searchBar.text;
-    NSInteger buttonIndex = controller.searchBar.selectedScopeButtonIndex;
     [self.filteredNames removeAllObjects];
     [self.filteredNamesBackup removeAllObjects];
     if (searchString.length > 0) {
@@ -71,18 +67,6 @@ static const NSInteger longNamesButtonIndex = 2;
         NSPredicate *predicateAll = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *name, NSDictionary *b){
             // 匹配字符串
             NSRange range = [name[@"userNickName"] rangeOfString:searchString options:NSCaseInsensitiveSearch];
-            return range.location != NSNotFound;
-        }];
-        //这个谓词是判断 scope
-        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *name, NSDictionary *b){
-            //block，其中
-            NSUInteger nameLength = name.length;
-            // 如果是 short 且 name 长度大于6的，或者是 long 的，name 长度小于6的，则返回 NO
-            if ((buttonIndex == shortNamesButtonIndex && nameLength >= longNameSize) || (buttonIndex == longNamesButtonIndex && nameLength < longNameSize)) {
-                return NO;
-            }
-            // 匹配字符串
-            NSRange range = [name rangeOfString:searchString options:NSCaseInsensitiveSearch];
             return range.location != NSNotFound;
         }];
         // 提取每个字符串进行谓词检查
@@ -112,36 +96,5 @@ static const NSInteger longNamesButtonIndex = 2;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
 }
-
-
-// 当 scope 的选择改变时，调用这个方法
-//- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope{
-//    if (self.filteredNamesBackup.count > 0 && self.filteredNames.count > 0) {
-//        
-//        self.filteredNamesBackup = [self.filteredNames mutableCopy];
-//        NSArray * array = [NSArray arrayWithArray: self.filteredNamesBackup];
-//        for(NSString *str in array){
-//            switch (selectedScope) {
-//                case 0:
-//                    self.filteredNamesBackup = [self.filteredNames mutableCopy];
-//                    break;
-//                case shortNamesButtonIndex:
-//                    if (str.length >= 6) {
-//                        [self.filteredNamesBackup removeObject:str];
-//                    }
-//                    break;
-//                case longNamesButtonIndex:
-//                    if (str.length < 6) {
-//                        [self.filteredNamesBackup removeObject:str];
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
-//
-//    [self.tableView reloadData];
-//}
 
 @end

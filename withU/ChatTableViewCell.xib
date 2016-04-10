@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lPq-7C-E7b" id="Y5F-sf-HcS">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ihead_007" translatesAutoresizingMaskIntoConstraints="NO" id="p1H-nk-p8w">
@@ -22,14 +22,8 @@
                             <constraint firstAttribute="width" constant="55" id="hJo-5y-o5Y"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6H-Ag-oUs">
-                        <rect key="frame" x="76" y="41" width="40" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opl-9O-0fw">
-                        <rect key="frame" x="275" y="7" width="38" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opl-9O-0fw">
+                        <rect key="frame" x="274" y="7" width="38" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -40,10 +34,16 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kiq-X2-qhY">
-                        <rect key="frame" x="165" y="39" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kiq-X2-qhY">
+                        <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6H-Ag-oUs">
+                        <rect key="frame" x="76" y="42" width="40" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -55,8 +55,6 @@
                     <constraint firstAttribute="trailingMargin" secondItem="Opl-9O-0fw" secondAttribute="trailing" id="WJp-2f-LWc"/>
                     <constraint firstAttribute="topMargin" secondItem="p1H-nk-p8w" secondAttribute="top" id="YDB-4l-cLd"/>
                     <constraint firstItem="p1H-nk-p8w" firstAttribute="centerY" secondItem="Y5F-sf-HcS" secondAttribute="centerY" id="ca2-8w-zOZ"/>
-                    <constraint firstItem="Kiq-X2-qhY" firstAttribute="top" secondItem="Y5F-sf-HcS" secondAttribute="topMargin" constant="31" id="dbT-zh-sIt"/>
-                    <constraint firstItem="Kiq-X2-qhY" firstAttribute="leading" secondItem="s6H-Ag-oUs" secondAttribute="trailing" constant="49" id="gAQ-QI-Yrf"/>
                     <constraint firstItem="s6H-Ag-oUs" firstAttribute="leading" secondItem="p1H-nk-p8w" secondAttribute="trailing" constant="8" id="rLC-hO-7SZ"/>
                     <constraint firstAttribute="topMargin" secondItem="v3f-uI-gqG" secondAttribute="top" id="shn-mC-0WF"/>
                     <constraint firstItem="p1H-nk-p8w" firstAttribute="leading" secondItem="Y5F-sf-HcS" secondAttribute="leadingMargin" constant="5" id="yZk-kq-ZYA"/>

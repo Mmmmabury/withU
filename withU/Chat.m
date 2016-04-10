@@ -12,6 +12,8 @@
 #import "CellFrameModel.h"
 #import "UIView+ViewFrameGeometry.h"
 #import "DetailViewController.h"
+#import "netWorkTool.h"
+#import "withUNetTool.h"
 
 #define kStatusBarHeight [UIApplication sharedApplication].statusBarFrame.size.height
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -26,6 +28,7 @@
     UIImageView *_toolBar;
     UITextField *_textField;
 }
+@property (nonatomic, strong) id <withUNetTool> delegate;
 @end
 
 @implementation Chat
@@ -41,7 +44,9 @@
     // 监听状态栏的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willChangeStatusBarFrameNotification:) name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToDetail) name:@"goToDetail" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:@"receiveMessage" object:nil];
 
+    self.delegate = [[netWorkTool alloc] initWithMqttClientId:@"pub"];
     //0.加载数据
     [self loadData];
     
@@ -50,6 +55,20 @@
     
     //2.工具栏
     [self addToolBar];
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+
+    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_cellFrameDatas.count - 1 inSection:0];
+    [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+- (void) receiveMessage{
+    
+    [self loadData];
+    [_chatView reloadData];
+    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_cellFrameDatas.count - 1 inSection:0];
+    [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void) goToDetail{
@@ -109,24 +128,6 @@
     _toolBar = bgView;
     [self.view addSubview:bgView];
     
-//    UIButton *sendSoundBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    sendSoundBtn.frame = CGRectMake(0, 0, kToolBarH, kToolBarH);
-//    [sendSoundBtn setImage:[UIImage imageNamed:@"chat_bottom_voice_nor"] forState:UIControlStateNormal];
-//    sendSoundBtn.hidden = YES;
-//    [bgView addSubview:sendSoundBtn];
-//    
-//    UIButton *addMoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    addMoreBtn.frame = CGRectMake(self.view.frame.size.width - kToolBarH, 0, kToolBarH, kToolBarH);
-//    [addMoreBtn setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
-//    addMoreBtn.hidden = YES;
-//    [bgView addSubview:addMoreBtn];
-//    
-//    UIButton *expressBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    expressBtn.frame = CGRectMake(self.view.frame.size.width - kToolBarH * 2, 0, kToolBarH, kToolBarH);
-//    [expressBtn setImage:[UIImage imageNamed:@"chat_bottom_smile_nor"] forState:UIControlStateNormal];
-//    expressBtn.hidden = YES;
-//    [bgView addSubview:expressBtn];
-    
     _textField = [[UITextField alloc] init];
     _textField.returnKeyType = UIReturnKeySend;
     _textField.enablesReturnKeyAutomatically = YES;
@@ -185,29 +186,49 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //1.获得时间
-    NSDate *senddate=[NSDate date];
-    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
-    [dateformatter setDateFormat:@"HH:mm"];
-    NSString *locationString=[dateformatter stringFromDate:senddate];
+    [self.delegate mqttPubtext:textField.text andTopic:[@"/ID/" stringByAppendingString:self.userId]];
     
-    //2.创建一个MessageModel类
+    NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *docpath = [docpaths objectAtIndex:0];
+    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    NSMutableDictionary *chatDict = [[NSDictionary dictionaryWithContentsOfFile:docpath] mutableCopy];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *currentDateString = [dateFormatter stringFromDate:date];
+    
+    NSArray *keys = [chatDict allKeys];
+    NSUInteger result = [keys indexOfObject: self.userId];
+    if (result == NSNotFound) {
+        NSLog(@"notfind");
+    }
+    NSMutableArray *chatArray = [chatDict[self.userId] mutableCopy];
+    NSDictionary *messageDict = @{@"text": textField.text, @"time": currentDateString, @"type": @"0"};
+    [chatArray addObject: messageDict];
+    
+    [chatDict setObject:chatArray forKey:self.userId];
+    [chatDict writeToFile:docpath atomically:YES];
+    
+
+    
+    //创建一个MessageModel类
     MessageModel *message = [[MessageModel alloc] init];
     message.text = textField.text;
-    message.time = locationString;
+    message.time = currentDateString;
     message.type = 0;
     
-    //3.创建一个CellFrameModel类
+    //创建一个CellFrameModel类
     CellFrameModel *cellFrame = [[CellFrameModel alloc] init];
     CellFrameModel *lastCellFrame = [_cellFrameDatas lastObject];
     message.showTime = ![lastCellFrame.message.time isEqualToString:message.time];
     cellFrame.message = message;
     
-    //4.添加进去，并且刷新数据
+    //添加进去，并且刷新数据
     [_cellFrameDatas addObject:cellFrame];
     [_chatView reloadData];
     
-    //5.自动滚到最后一行
+    //自动滚到最后一行
     NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_cellFrameDatas.count - 1 inSection:0];
     [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
