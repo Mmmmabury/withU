@@ -58,9 +58,16 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-
-    NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_cellFrameDatas.count - 1 inSection:0];
-    [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(concurrentQueue, ^{
+        
+        
+    if (_cellFrameDatas.count != 0) {
+        
+        NSIndexPath *lastPath = [NSIndexPath indexPathForRow:(_cellFrameDatas.count - 1) inSection:0];
+        [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
+    });
 }
 
 - (void) receiveMessage{
@@ -86,7 +93,7 @@
     NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     // 好友数据路径，放在沙盒的 document 目录下
     NSString *docpath = [docpaths objectAtIndex:0];
-    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    docpath = [docpath stringByAppendingString:@"/chatMessages.plist"];
     NSDictionary *dataDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
     NSArray *dataArray = dataDict[self.userId];
     for (NSDictionary *dict in dataArray) {
@@ -186,11 +193,16 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.delegate mqttPubtext:textField.text andTopic:[@"/ID/" stringByAppendingString:self.userId]];
+    NSString *Id = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] stringValue];
+    NSString *m = [Id stringByAppendingString:@"&"];
+    m = [m stringByAppendingString:textField.text];
+    [self.delegate mqttPubtext:m andTopic:[@"/ID/" stringByAppendingString:self.userId]];
     
+    // 获取聊天记录数据路径
     NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *docpath = [docpaths objectAtIndex:0];
-    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    docpath = [docpath stringByAppendingString:@"/chatMessages.plist"];
+    // 从文件中序列化聊天数据，是一个字典
     NSMutableDictionary *chatDict = [[NSDictionary dictionaryWithContentsOfFile:docpath] mutableCopy];
     
     NSDate *date = [NSDate date];
@@ -200,10 +212,14 @@
     
     NSArray *keys = [chatDict allKeys];
     NSUInteger result = [keys indexOfObject: self.userId];
+    NSMutableArray *chatArray;
     if (result == NSNotFound) {
-        NSLog(@"notfind");
+        
+        // 如果消息发送者 id 有出现在聊天记录中，则新建一个数组来存储聊天记录
+        chatArray = [[NSMutableArray alloc] init];
+    }else{
+        chatArray = [chatDict[self.userId] mutableCopy];
     }
-    NSMutableArray *chatArray = [chatDict[self.userId] mutableCopy];
     NSDictionary *messageDict = @{@"text": textField.text, @"time": currentDateString, @"type": @"0"};
     [chatArray addObject: messageDict];
     
@@ -221,7 +237,10 @@
     //创建一个CellFrameModel类
     CellFrameModel *cellFrame = [[CellFrameModel alloc] init];
     CellFrameModel *lastCellFrame = [_cellFrameDatas lastObject];
-    message.showTime = ![lastCellFrame.message.time isEqualToString:message.time];
+    NSDate *lastCellTime = [dateFormatter dateFromString:lastCellFrame.message.time];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    NSString *lastCellTimeString = [dateFormatter stringFromDate:lastCellTime];
+    message.showTime = ![lastCellTimeString isEqualToString:[dateFormatter stringFromDate:date]];
     cellFrame.message = message;
     
     //添加进去，并且刷新数据
@@ -244,8 +263,6 @@
         [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
-
-
 
 /**
  *  键盘发生改变执行
@@ -273,7 +290,7 @@
     
 }
 
-#pragma mark - 按钮返回事件(重写父类的方法)
+
 - (void)backAction:(UIButton *)button
 {
     [_textField resignFirstResponder];
@@ -285,7 +302,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - 键盘改变的通知
+
 - (void)willChangeStatusBarFrameNotification:(NSNotification *)notif
 {
     _isCall = kStatusBarHeight == 40 ? YES : NO;
@@ -295,38 +312,5 @@
     }];
 }
 
-#pragma mark - myMessageNotification
-//- (void)myMessageNotification:(NSNotification *)notif
-//{
-//    NSLog(@"notif:%@",notif.userInfo);
-//    // 判断接受消息是来自当前好友
-//    if ([notif.userInfo[@"fromUser"] isEqualToString:self.friendModel.friendId]) {
-//        //1.获得时间
-//        NSDate *senddate=[NSDate date];
-//        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
-//        [dateformatter setDateFormat:@"HH:mm"];
-//        NSString *locationString=[dateformatter stringFromDate:senddate];
-//
-//        //2.创建一个MessageModel类
-//        MessageModel *message = [[MessageModel alloc] init];
-//        message.text = notif.userInfo[@"text"];
-//        message.time = locationString;
-//        message.type = 1;
-//
-//        //3.创建一个CellFrameModel类
-//        CellFrameModel *cellFrame = [[CellFrameModel alloc] init];
-//        CellFrameModel *lastCellFrame = [_cellFrameDatas lastObject];
-//        message.showTime = ![lastCellFrame.message.time isEqualToString:message.time];
-//        cellFrame.message = message;
-//
-//        //4.添加进去，并且刷新数据
-//        [_cellFrameDatas addObject:cellFrame];
-//        [_chatView reloadData];
-//
-//        //5.自动滚到最后一行
-//        NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_cellFrameDatas.count - 1 inSection:0];
-//        [_chatView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//    }
-//}
 
 @end

@@ -16,9 +16,10 @@ class dataBase:
                 sqltype = sql.split(' ')[0]
                 if sqltype == 'select':
                     result = cursor.fetchall()
-                    for k in result[0]:
-                        if result[0][k] is None:
-                            result[0][k] = "NULL"
+                    if len(result) > 0:
+                        for k in result[0]:
+                            if result[0][k] is None:
+                                result[0][k] = "NULL"
                 else:
                     result = []
                 connection.commit()

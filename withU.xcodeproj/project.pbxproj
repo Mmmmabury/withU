@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2201AD251CBB38D600090981 /* addFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2201AD241CBB38D600090981 /* addFriendController.m */; };
 		220761E71CACF9D400F9F85A /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 220761E61CACF9D400F9F85A /* MessageModel.m */; };
 		220761EA1CACFA0A00F9F85A /* CellFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 220761E91CACFA0A00F9F85A /* CellFrameModel.m */; };
 		220761F41CACFABA00F9F85A /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 220761F31CACFABA00F9F85A /* NSString+Extension.m */; };
@@ -66,6 +67,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2201AD061CBAA72D00090981 /* define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = define.h; sourceTree = "<group>"; };
+		2201AD231CBB38D600090981 /* addFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addFriendController.h; sourceTree = "<group>"; };
+		2201AD241CBB38D600090981 /* addFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addFriendController.m; sourceTree = "<group>"; };
 		220761E51CACF9D400F9F85A /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
 		220761E61CACF9D400F9F85A /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
 		220761E81CACFA0A00F9F85A /* CellFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellFrameModel.h; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				222BFFD01CAB7C12006067A7 /* withUNetTool.h */,
 				22EAAE8A1CABD7F000115B85 /* netWorkTool.h */,
 				22EAAE8B1CABD7F000115B85 /* netWorkTool.m */,
+				2201AD061CBAA72D00090981 /* define.h */,
 			);
 			name = NetWorkingTool;
 			sourceTree = "<group>";
@@ -257,6 +262,8 @@
 				220762091CADFE1200F9F85A /* detailController */,
 				22B8D4CE1C8DB9E6004A7267 /* contactsViewController.h */,
 				22B8D4CF1C8DB9E6004A7267 /* contactsViewController.m */,
+				2201AD231CBB38D600090981 /* addFriendController.h */,
+				2201AD241CBB38D600090981 /* addFriendController.m */,
 				22B8D4D11C8DBE86004A7267 /* ContactsSearchResultsController.h */,
 				22B8D4D21C8DBE86004A7267 /* ContactsSearchResultsController.m */,
 			);
@@ -591,6 +598,7 @@
 				220761F41CACFABA00F9F85A /* NSString+Extension.m in Sources */,
 				220761FD1CACFD0100F9F85A /* UIView+ViewFrameGeometry.m in Sources */,
 				22B8D4691C8D58FB004A7267 /* ChatViewController.m in Sources */,
+				2201AD251CBB38D600090981 /* addFriendController.m in Sources */,
 				222490641C928F2300D08491 /* Chat.m in Sources */,
 				222A87471C9129CE003677BD /* RegisterViewController.m in Sources */,
 				220761FA1CACFC3E00F9F85A /* UIImage+ResizeImage.m in Sources */,

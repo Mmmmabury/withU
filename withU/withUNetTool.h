@@ -26,5 +26,8 @@
 - (void) mqttPubtext: (NSString *) message
         andTopic: (NSString *) topic;
 - (void) mqttSub;
+- (void) findUsersByQuery: (NSString *) query;
+- (void) getAvatarById: (NSString *) userId;
+- (void) uploadAvatarWithId: (NSString *) userId;
 
 @end

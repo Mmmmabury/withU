@@ -2,6 +2,7 @@
 import json
 from dataBaseHandle import *
 import time
+from friends import *
 ################################
 #
 # 获取信息
@@ -22,14 +23,60 @@ class postHandle:
         for element in params:
             logoutInfo[element.split('=')[0]] = element.split('=')[1]
         userId = logoutInfo['userId']
-        sql = "update withU_user_login_status set isOnline=false where userId='%s';"
+        sql = "update withU_user_login_status set isOnline=false where userId=%s;"
         sql = sql % userId
         try:
             self.dataBase.databaseHandle(sql)
             message['message'] = "登出成功"
             message['status'] = "success"
         except Exception as e:
-            print("logout is wrong :" + str(e))
+            print("#### logout is wrong :" + str(e))
+        encodingJson = json.dumps(message)
+        return encodingJson
+
+    def update(self):
+        message = {"method": "update", "status": "failed", "message": "更新失败"}
+        userId = ''
+        item = ''
+        values = ''
+        params = self.urlParse.query.split('&')
+        info = {}
+        for element in params:
+            info[element.split('=')[0]] = element.split('=')[1]
+        userId = info.pop('userId')
+        for i in info:
+            item = i
+            values = info[item]
+        if item == 'userPassword' or item == 'userId' or item == 'userPhoneNumber':
+            return json.dumps(message)
+        sql = "update withU_users set %s='%s' where userId=%s;"
+        sql = sql % (item, values, userId)
+        try:
+            self.dataBase.databaseHandle(sql)
+            message['message'] = "修改成功"
+            message['status'] = "success"
+        except Exception as e:
+            print("#### update is wrong :" + str(e))
+        encodingJson = json.dumps(message)
+        return encodingJson
+
+    def delete(self):
+        params = self.urlParse.query.split('&')
+        info = {}
+        for element in params:
+            info[element.split('=')[0]] = element.split('=')[1]
+        self.friends = Friends(info['userId'])
+        message = self.friends.deleteFriend(info['friendId'])
+        encodingJson = json.dumps(message)
+        return encodingJson
+
+    def addFriend(self):
+        params = self.urlParse.query.split('&')
+        info = {}
+        for element in params:
+            info[element.split('=')[0]] = element.split('=')[1]
+        self.friends = Friends(info['userId'])
+        message = self.friends.addFriend(info['friendId'])
         encodingJson = json.dumps(message)
         return encodingJson
 
@@ -84,3 +131,5 @@ class postHandle:
             encodingJson = json.dumps(message)
             print(encodingJson)
             return encodingJson
+
+

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AFNetworking/AFNetworking.h>
 #import "withUNetTool.h"
 
 @interface netWorkTool : NSObject <withUNetTool>

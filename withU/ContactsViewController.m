@@ -13,6 +13,7 @@
 #import "DetailViewController.h"
 #import "netWorkTool.h"
 #import "withUNetTool.h"
+#import "addFriendController.h"
 
 static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 
@@ -24,7 +25,6 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) id <withUNetTool> delegate;
-//@property (strong, nonatomic) NSDictionary *friend;
 
 @end
 
@@ -33,13 +33,15 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 - (void) initData{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path = [paths objectAtIndex:0];
-    path = [path stringByAppendingString:@"c.plist"];
+    path = [path stringByAppendingString:@"/c.plist"];
     self.names = [NSDictionary dictionaryWithContentsOfFile:path];
     NSMutableArray *mutableKeys = [[[self.names allKeys] sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
     NSArray *tempKeys = [mutableKeys copy];
     for (NSString *key in tempKeys){
+        
         NSArray *friends = self.names[key];
         if ([friends count] == 0) {
+            
             [mutableKeys removeObject:key];
         }
     }
@@ -49,31 +51,20 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:contactsTableViewIdentifier];
     self.delegate = [[netWorkTool alloc] init];
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"contacts" ofType:@"plist"];
 
-    // 初始化数据
+// 初始化数据
     [self initData];
+    
 // 导航栏添加右按钮
     UIBarButtonItem *rightButton = [[UIBarButtonItem   alloc]initWithTitle:@"添加"style:UIBarButtonItemStyleDone target:self  action:@selector(add)];
     self.navigationItem.rightBarButtonItem = rightButton;
-//    self.hidesBottomBarWhenPushed = YES;
     
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"friends" ofType:@"json"];
-//    NSString *friends = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-//    NSArray *friendsArray = [NSJSONSerialization JSONObjectWithData:[friends dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
-//    NSDictionary *friendDict;
-//    for (friendDict in friendsArray){
-    
-//    }
 //    搜索栏
-    
     ContactsSearchResultsController *resultsController = [[ContactsSearchResultsController alloc] initWithNames:self.names keys:self.keys];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
     
     UISearchBar *searchBar = self.searchController.searchBar;
-//    searchBar.scopeButtonTitles = @[@"All", @"Short", @"Long"];
     searchBar.placeholder = @"搜索";
     [searchBar sizeToFit];
     self.tableView.tableHeaderView = searchBar;
@@ -84,7 +75,10 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 }
 
 - (void) add{
-    UIViewController *cV = [self.storyboard instantiateViewControllerWithIdentifier:@"addFriend"];
+    
+    addFriendController *cV = [self.storyboard instantiateViewControllerWithIdentifier:@"addFriend"];
+//    UIViewController *cV = [self.storyboard instantiateViewControllerWithIdentifier:@"addFriend"];
+//    addFriendController *cV = [[addFriendController alloc] init];
     cV.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:cV animated:YES];
 }
@@ -96,8 +90,8 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 }
 
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -118,22 +112,41 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:contactsTableViewIdentifier forIndexPath:indexPath];
     if (cell == nil) {
+        
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:contactsTableViewIdentifier];
     }
     NSString *key = self.keys[indexPath.section];
     NSArray *nameSection = self.names[key];
     NSDictionary *friend = nameSection[indexPath.row];
+    NSString *userId = [[NSString alloc] initWithFormat:@"%d", [friend[@"userId"] intValue]];
+    
     cell.textLabel.text = friend[@"userNickName"];
-    cell.imageView.image = [UIImage imageNamed:@"1234"];
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent: userId];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileIsExist = [fileManager fileExistsAtPath: fullPathToFile];
+    UIImage *image;
+    if (fileIsExist) {
+        
+        image = [UIImage imageWithContentsOfFile:fullPathToFile];
+    }else{
+        
+        image = [UIImage imageNamed:@"friend_icon"];
+    }
+    
+    cell.imageView.image = image;
     cell.detailTextLabel.hidden = YES;
-    cell.detailTextLabel.text = [[NSString alloc] initWithFormat:@"%d", [friend[@"userId"] intValue]];
+    cell.detailTextLabel.text = userId;
     return cell;
 }
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    
     return self.keys[section];
-
 }
 
 - (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView{
@@ -144,22 +157,23 @@ static NSString *contactsTableViewIdentifier = @"ContactsTableViewIdentifier";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if ([segue.identifier isEqualToString:@"fromContactToDetail"]) {
+        
         UITableViewCell *cell = sender;
         DetailViewController *view = segue.destinationViewController;
         NSString *nickName = cell.textLabel.text;
         NSString *firstLettle = [[nickName substringToIndex:1] uppercaseString];
         NSArray *farray = self.names[firstLettle];
         for (NSDictionary *fdict in farray) {
+            
            NSString *userId = [[NSString alloc] initWithFormat:@"%d", [fdict[@"userId"] intValue]];
             if ([userId isEqualToString: cell.detailTextLabel.text]) {
+                
                 view.friendDict = fdict;
                 break;
             }
  
         }
     }
-//    UIViewController *view = segue.destinationViewController;
-//    view.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -54,6 +54,24 @@
 }
 - (void)setCellFrame:(CellFrameModel *)cellFrame
 {
+    
+//    获取头像
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent: @"/avatar"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileIsExist = [fileManager fileExistsAtPath: fullPathToFile];
+    UIImage *image;
+    if (fileIsExist) {
+        
+        image = [UIImage imageWithContentsOfFile:fullPathToFile];
+    }else{
+        
+        image = [UIImage imageNamed:@"friend_icon"];
+    }
+    
+    
     _cellFrame = cellFrame;
     MessageModel *message = cellFrame.message;
     
@@ -69,7 +87,7 @@
     [_iconView setBackgroundImage:[UIImage imageNamed:iconStr] forState:UIControlStateNormal];
     if (message.type == kMessageModelTypeOther) {
 //        _iconView.image = [UIImage imageNamed:@"me"];
-        [_iconView setBackgroundImage:[UIImage imageNamed:@"me"] forState:UIControlStateNormal];
+        [_iconView setBackgroundImage:image forState:UIControlStateNormal];
     } else {
         //        [_iconView sd_setImageWithURL:[NSURL URLWithString:self.friendDic[@"icon"]] placeholderImage:[UIImage imageNamed:@"friend_icon.png"]];
 //        _iconView.image = [UIImage imageNamed:@"friend_icon.png"];

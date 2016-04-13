@@ -12,9 +12,7 @@
 #import "Chat.h"
 #import "netWorkTool.h"
 #import "withUNetTool.h"
-
-static NSString *host = @"127.0.0.1";
-//static NSString *host = @"139.129.119.91";
+#import "define.h"
 
 @interface ChatViewController () <UITableViewDelegate, UITableViewDataSource >
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -29,20 +27,6 @@ static NSString *host = @"127.0.0.1";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-//    self.chatData = @[@{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
-//                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
-//                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"我叫大 sb", @"msg" : @"hi", @"time" : @"01.01"},
-//                      @{@"name" : @"endif", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"吃吃吃吃吃", @"msg" : @"123", @"time" : @"01.01"},
-//                      @{@"name" : @"hhh", @"msg" : @"123", @"time" : @"01.01"}
-//                      ];
     
     UINib *nib = [UINib nibWithNibName:@"ChatTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"chatCellTableIdentifier"];
@@ -62,6 +46,7 @@ static NSString *host = @"127.0.0.1";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentLoginView) name:@"presentLoginView" object:nil];
+     self.delegate = [[netWorkTool alloc] initWithMqttClientId:@"sub"];
     BOOL isLogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"isLogin"];
     if (!isLogin) {
         NSLog(@"islogin == no");
@@ -69,14 +54,38 @@ static NSString *host = @"127.0.0.1";
 //        UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 //        UIViewController *cv = [loginStoryboard instantiateViewControllerWithIdentifier:@"loginMain"];
 //        [self presentViewController:cv animated:YES completion:nil];
+    }else{
+        
+         [self.delegate mqttSub];
     }
-    self.delegate = [[netWorkTool alloc] initWithMqttClientId:@"sub"];
-    [self.delegate mqttSub];
+   
+   
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:@"loginSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage:) name:@"receiveMessage" object:nil];
-//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSuccess) name:@"registerSuccess" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:@"registerSuccess" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(friendsDidGet) name:@"friendsDidGet" object:nil];
 }
 
+- (void) friendsDidGet{
+    
+    
+    NSMutableArray *friendsId = [[NSMutableArray alloc] init];
+    for (NSDictionary *fDict in self.chatData){
+        
+        [friendsId addObject:fDict[@"userId"]];
+    }
+    for (NSString *userId in friendsId){
+        
+        [self.delegate getAvatarById:userId];
+    }
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    
+    [self loadData];
+    [self.tableView reloadData];
+}
 /**
  *  加载聊天数据
  */
@@ -85,15 +94,22 @@ static NSString *host = @"127.0.0.1";
     NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     // 聊天数据路径，放在沙盒的 document 目录下
     NSString *docpath = [docpaths objectAtIndex:0];
-    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    docpath = [docpath stringByAppendingString:@"/chatMessages.plist"];
     NSDictionary *chatDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
     NSArray *userIdArray = [[chatDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
     
-    docpath = [docpaths[0] stringByAppendingString:@"c.plist"];
+    if (chatDict.count == 0) {
+        return;
+    }
+    docpath = [docpaths[0] stringByAppendingString:@"/c.plist"];
     NSDictionary *friendsDict = [NSDictionary dictionaryWithContentsOfFile:docpath];
     NSArray *allFriendsInfo = [friendsDict allValues];
     NSMutableArray *chatData = [[NSMutableArray alloc] init];
     for (NSString *friendId in userIdArray){
+        NSArray *a = chatDict[friendId];
+        if ([a count] == 0) {
+            continue;
+        }
         for (NSArray *friends in allFriendsInfo){
             
             if (friends.count == 0) {
@@ -124,14 +140,34 @@ static NSString *host = @"127.0.0.1";
     // 初始化聊天数据
     [self.delegate initMessageData];
     [self.delegate mqttSub];
-    [self.tableView reloadData];
+    [self createFriendFolder];
+//    [self.tableView reloadData];
+}
+
+- (void) createFriendFolder{
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent: @"/friendAvatar"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL y = YES;
+    BOOL fileIsExist = [fileManager fileExistsAtPath: fullPathToFile isDirectory: &y];
+    if (fileIsExist) {
+        
+        [fileManager removeItemAtPath:fullPathToFile error:nil];
+    }
+    [fileManager createDirectoryAtPath:fullPathToFile withIntermediateDirectories:NO attributes:nil error:nil];
+    
+    
+    
 }
 
 - (void) receiveMessage:(NSNotification *)notification{
     
     NSArray *docpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *docpath = [docpaths objectAtIndex:0];
-    docpath = [docpath stringByAppendingString:@"chatMessages.plist"];
+    docpath = [docpath stringByAppendingString:@"/chatMessages.plist"];
     NSMutableDictionary *chatDict = [[NSDictionary dictionaryWithContentsOfFile:docpath] mutableCopy];
     
     NSDictionary *dict = [notification userInfo];
@@ -142,14 +178,19 @@ static NSString *host = @"127.0.0.1";
     
     NSArray *keys = [chatDict allKeys];
     NSUInteger result = [keys indexOfObject:dict[@"userId"]];
+    NSMutableArray *chatArray;
     if (result == NSNotFound) {
-        NSLog(@"notfind");
+        
+        chatArray = [[NSMutableArray alloc] init];
+    }else{
+        
+        chatArray = [chatDict[dict[@"userId"]] mutableCopy];
     }
-    NSMutableArray *chatArray = [chatDict[dict[@"userId"]] mutableCopy];
     NSDictionary *messageDict = @{@"text": dict[@"text"], @"time": currentDateString, @"type": @"1"};
     [chatArray addObject: messageDict];
     
     [chatDict setObject:chatArray forKey:dict[@"userId"]];
+    
     [chatDict writeToFile:docpath atomically:YES];
     [self loadData];
     [self.tableView reloadData];
@@ -194,9 +235,12 @@ static NSString *host = @"127.0.0.1";
     
     cell.name = rowData[@"nickName"];
     cell.msg = rowData[@"text"];
-    cell.time = rowData[@"time"];
+    NSString *time = rowData[@"time"];
+    time = [time substringFromIndex:11];
+    cell.time = time;
     cell.chatImageView.layer.masksToBounds = YES;
     cell.chatImageView.layer.cornerRadius = 4;
+    cell.chatImageView.image = [UIImage imageNamed:@"friend_icon"];
     cell.friendId = rowData[@"friendId"];
     return cell;
 

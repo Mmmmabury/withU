@@ -75,7 +75,7 @@ class getHandle:
             return encodingJson
 
     def userinformation(self):
-        message = {}
+        message = {"method": "userInfo", "status": "failed", "message": "查询失败"}
         try:
             params = self.urlParse.query.split('&')
             info = {}
@@ -88,6 +88,28 @@ class getHandle:
             message.update(infoDict)
         except Exception as e:
             print("#### userinformation is wrong:" + str(e))
+        finally:
+            encodingJson = json.dumps(message)
+            return encodingJson
+
+    def findUsersByQuery(self):
+        message = {"method": "findUsers", "status": "failed", "message": "查询失败"}
+        try:
+            params = self.urlParse.query.split('&')
+            info = {}
+            for element in params:
+                info[element.split('=')[0]] = element.split('=')[1]
+            sql = "select userId, userNickName, userAge, userSex, userArea from withU_users where userNickName like '%s' ;"
+            sql = sql % ("%" + info["query"] + "%")
+            result = self.dataBase.databaseHandle(sql)
+            if len(result) > 0:
+                message["resultArray"] = result
+                message["message"] = "查询成功"
+                message["status"] = "success"
+            else:
+                message["message"] = "没有匹配的用户"
+        except Exception as e:
+            print("#### findUsers is wrong:" + str(e))
         finally:
             encodingJson = json.dumps(message)
             return encodingJson

@@ -7,8 +7,7 @@
 //
 
 #import "LoginViewController.h"
-//static NSString *host = @"139.129.119.91";
-static NSString *host = @"127.0.0.1";
+#import "define.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *loginQuery;
@@ -41,35 +40,31 @@ static NSString *host = @"127.0.0.1";
 }
 
 - (IBAction)loginHandle:(id)sender {
-    [self requestServerLogin];
+    if (self.loginQuery.text.length == 0 || self.password.text.length == 0) {
+      [AFMInfoBanner showAndHideWithText: @"请输入账号和密码" style:AFMInfoBannerStyleError];
+    }else if(self.password.text.length < 6){
+        
+          [AFMInfoBanner showAndHideWithText:@"密码需要大于6位" style:AFMInfoBannerStyleError];
+    }else{
+        
+        [self requestServerLogin];
+    }
 //    [AFMInfoBanner showAndHideWithText:@"Error text" style:AFMInfoBannerStyleError];
 //    [[NSNotificationCenter defaultCenter]postNotificationName:@"getFriends" object:nil];
 //    [self dismissViewControllerAnimated:YES completion:nil];
 //    NSLog(@"%@", self.messageFromServer);
 //    [NSThread sleepForTimeInterval:2.0];
-
-
 }
 - (IBAction)start:(id)sender {
 //    self.activityIndicator.hidden = NO;
 //    [self.activityIndicator startAnimating];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 /**
  *  向服务器请求登录
  */
 - (void) requestServerLogin{
-    NSString *url = [[NSString alloc]initWithFormat:@"http://%@:8000/login?query=%@&password=%@", host, self.loginQuery.text, self.password.text];
+    NSString *url = [[NSString alloc]initWithFormat:@"http://%@:8000/login?query=%@&password=%@", HOST, self.loginQuery.text, self.password.text];
     NSURL *URL = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
