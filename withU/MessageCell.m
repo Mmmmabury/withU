@@ -49,8 +49,8 @@
     return self;
 }
 - (void) fromChatToDetail{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToDetail" object:nil];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToDetail" object:nil];
 }
 - (void)setCellFrame:(CellFrameModel *)cellFrame
 {
